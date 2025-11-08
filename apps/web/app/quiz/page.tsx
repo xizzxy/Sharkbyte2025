@@ -2,7 +2,7 @@
 
 import { useState } from 'react'
 import { useRouter } from 'next/navigation'
-import { ChevronRight, Loader2 } from 'lucide-react'
+import { ChevronRight, Loader2, Cog, Zap, Building2, Code, Heart, Building, Briefcase, BarChart3, DollarSign, Calendar, Clock, MapPin, Globe, Trophy } from 'lucide-react'
 
 interface QuizFormData {
   career: string
@@ -119,14 +119,14 @@ export default function QuizPage() {
                 required
               >
                 <option value="">Select a career...</option>
-                <option value="Mechanical Engineer">⚙️ Mechanical Engineer</option>
-                <option value="Electrical Engineer">⚡ Electrical Engineer</option>
-                <option value="Civil Engineer">🏗️ Civil Engineer</option>
-                <option value="Software Developer">💻 Software Developer</option>
-                <option value="Registered Nurse">🏥 Registered Nurse</option>
-                <option value="Architect">🏛️ Architect</option>
-                <option value="Accountant">💼 Accountant</option>
-                <option value="Data Scientist">📊 Data Scientist</option>
+                <option value="Mechanical Engineer">Mechanical Engineer</option>
+                <option value="Electrical Engineer">Electrical Engineer</option>
+                <option value="Civil Engineer">Civil Engineer</option>
+                <option value="Software Developer">Software Developer</option>
+                <option value="Registered Nurse">Registered Nurse</option>
+                <option value="Architect">Architect</option>
+                <option value="Accountant">Accountant</option>
+                <option value="Data Scientist">Data Scientist</option>
               </select>
             </div>
 
@@ -180,7 +180,8 @@ export default function QuizPage() {
                     onChange={(e) => setFormData({ ...formData, budget: e.target.value as any })}
                     className="mr-3"
                   />
-                  <span className="font-medium">💰 Under $30,000 (Low)</span>
+                  <DollarSign className="w-5 h-5 text-cyan-400 mr-2" />
+                  <span className="font-medium">Under $30,000 (Low)</span>
                 </label>
                 <label className="flex items-center p-3 border-2 rounded-lg cursor-pointer hover:border-blue-400 transition">
                   <input
@@ -191,7 +192,8 @@ export default function QuizPage() {
                     onChange={(e) => setFormData({ ...formData, budget: e.target.value as any })}
                     className="mr-3"
                   />
-                  <span className="font-medium">💰💰 $30,000 - $80,000 (Medium)</span>
+                  <DollarSign className="w-5 h-5 text-cyan-400 mr-2" />
+                  <span className="font-medium">$30,000 - $80,000 (Medium)</span>
                 </label>
                 <label className="flex items-center p-3 border-2 rounded-lg cursor-pointer hover:border-blue-400 transition">
                   <input
@@ -202,7 +204,8 @@ export default function QuizPage() {
                     onChange={(e) => setFormData({ ...formData, budget: e.target.value as any })}
                     className="mr-3"
                   />
-                  <span className="font-medium">💰💰💰 Over $80,000 (High)</span>
+                  <DollarSign className="w-5 h-5 text-cyan-400 mr-2" />
+                  <span className="font-medium">Over $80,000 (High)</span>
                 </label>
               </div>
             </div>
@@ -217,9 +220,9 @@ export default function QuizPage() {
                 onChange={(e) => setFormData({ ...formData, timeline: e.target.value as any })}
                 className="input-field"
               >
-                <option value="fast">⚡ Fastest path possible (2-3 years)</option>
-                <option value="normal">📅 Standard timeline (4 years)</option>
-                <option value="flexible">🕐 Flexible, can take longer (5+ years)</option>
+                <option value="fast">Fastest path possible (2-3 years)</option>
+                <option value="normal">Standard timeline (4 years)</option>
+                <option value="flexible">Flexible, can take longer (5+ years)</option>
               </select>
             </div>
 
@@ -233,9 +236,9 @@ export default function QuizPage() {
                 onChange={(e) => setFormData({ ...formData, location: e.target.value as any })}
                 className="input-field"
               >
-                <option value="miami">🏖️ Must stay in Miami</option>
-                <option value="florida">🌴 Anywhere in Florida</option>
-                <option value="anywhere">🌎 Open to out-of-state</option>
+                <option value="miami">Must stay in Miami</option>
+                <option value="florida">Anywhere in Florida</option>
+                <option value="anywhere">Open to out-of-state</option>
               </select>
             </div>
 
@@ -334,9 +337,9 @@ export default function QuizPage() {
                 onChange={(e) => setFormData({ ...formData, priority: e.target.value })}
                 className="input-field"
               >
-                <option value="cost">💰 Lowest cost</option>
-                <option value="speed">⚡ Fastest completion</option>
-                <option value="prestige">🏆 School reputation</option>
+                <option value="cost">Lowest cost</option>
+                <option value="speed">Fastest completion</option>
+                <option value="prestige">School reputation</option>
               </select>
             </div>
           </div>

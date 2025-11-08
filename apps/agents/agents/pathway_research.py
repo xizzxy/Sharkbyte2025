@@ -118,14 +118,84 @@ For software: No required license.
             return self._get_fallback_pathway(career, category, "anywhere")
 
     def _load_seed_data(self, career: str) -> Dict[str, Any]:
-        """Load pathway data from seed file"""
-        seed_file = Path(__file__).parent.parent.parent.parent / "data" / "seed" / "career_pathways.json"
+        """Load pathway data from florida_universities.json and build transfer partners"""
+        universities_file = Path(__file__).parent.parent.parent.parent / "data" / "seed" / "florida_universities.json"
         try:
-            with open(seed_file, 'r') as f:
-                all_pathways = json.load(f)
-                return all_pathways.get(career, {})
+            with open(universities_file, 'r') as f:
+                all_universities = json.load(f)
+
+            # Build transfer partners list based on career
+            transfer_partners = []
+            career_lower = career.lower()
+
+            # Determine which program to look for
+            program_keywords = []
+            if "mechanical" in career_lower:
+                program_keywords = ["mechanical engineering"]
+            elif "electrical" in career_lower or "electronics" in career_lower:
+                program_keywords = ["electrical engineering"]
+            elif "civil" in career_lower:
+                program_keywords = ["civil engineering"]
+            elif "software" in career_lower or "developer" in career_lower or "computer" in career_lower:
+                program_keywords = ["computer science", "software"]
+            elif "nurs" in career_lower:
+                program_keywords = ["nursing", "bsn", "rn"]
+            elif "data" in career_lower and "scien" in career_lower:
+                program_keywords = ["data science", "computer science"]
+            elif "architect" in career_lower:
+                program_keywords = ["architecture"]
+            elif "account" in career_lower or "business" in career_lower or "finance" in career_lower:
+                program_keywords = ["business", "accounting", "finance"]
+            else:
+                # Default - include all engineering and CS programs
+                program_keywords = ["engineering", "computer science", "business"]
+
+            # Extract matching programs from each university
+            for university in all_universities:
+                uni_name = university.get("name", "")
+                uni_location = university.get("location", "")
+                is_in_state = "FL" in uni_location
+                programs = university.get("programs", [])
+
+                # Find matching program
+                for program in programs:
+                    program_name = program.get("name", "").lower()
+                    # Check if any keyword matches
+                    if any(keyword in program_name for keyword in program_keywords):
+                        transfer_partners.append({
+                            "name": uni_name,
+                            "program": program.get("name", ""),
+                            "url": program.get("url", ""),
+                            "in_state": is_in_state,
+                            "location": uni_location
+                        })
+                        break  # Only one program per university
+
+            # Also load MDC programs
+            mdc_programs = []
+            mdc_file = Path(__file__).parent.parent.parent.parent / "data" / "seed" / "mdc_programs.json"
+            try:
+                with open(mdc_file, 'r') as f:
+                    all_mdc_programs = json.load(f)
+                    # Find matching MDC program
+                    for program in all_mdc_programs:
+                        if any(career in c for c in program.get("careers", [])):
+                            mdc_programs.append(program)
+                            break
+            except:
+                pass
+
+            if transfer_partners:
+                return {
+                    "transfer_partners": transfer_partners,
+                    "mdc_programs": mdc_programs
+                }
+            else:
+                print(f"[PathwayResearch] No matching programs found for {career}")
+                return {}
+
         except Exception as e:
-            print(f"[PathwayResearch] Failed to load seed data: {e}")
+            print(f"[PathwayResearch] Failed to load university data: {e}")
             return {}
 
     def _load_ranking_data(self) -> Dict[str, Any]:
@@ -189,7 +259,7 @@ For software: No required license.
                     seen_universities.add(uni_key)
                     unique_partners.append(t)
 
-            print(f"[PathwayResearch] Deduplicated: {len(all_partners)} → {len(unique_partners)} unique universities")
+            print(f"[PathwayResearch] Deduplicated: {len(all_partners)} -> {len(unique_partners)} unique universities")
 
             # Add ranking score to each partner for sorting
             for partner in unique_partners:
@@ -206,16 +276,17 @@ For software: No required license.
                 out_of_state.sort(key=lambda x: x.get("_ranking_score", 0), reverse=True)
                 in_state.sort(key=lambda x: x.get("_ranking_score", 0), reverse=True)
 
-                # Take top 3 out-of-state + top 2 in-state (5 total)
-                transfer_partners = out_of_state[:3] + in_state[:2]
-                print(f"[PathwayResearch] Location=anywhere: {len(out_of_state)} out-of-state, {len(in_state)} in-state → {len(transfer_partners)} selected")
+                # Take ALL out-of-state + top 4 in-state for diversity
+                # This gives Gemini more options to choose from (prestige/cheapest/fastest)
+                transfer_partners = out_of_state + in_state[:4]
+                print(f"[PathwayResearch] Location=anywhere: {len(out_of_state)} out-of-state, {len(in_state[:4])} in-state -> {len(transfer_partners)} selected")
 
             elif location == "florida":
                 # Only Florida schools, sorted by ranking
                 florida_schools = [t for t in unique_partners if t.get("in_state") != False]
                 florida_schools.sort(key=lambda x: x.get("_ranking_score", 0), reverse=True)
                 transfer_partners = florida_schools[:5]
-                print(f"[PathwayResearch] Location=florida: {len(florida_schools)} FL schools → {len(transfer_partners)} selected")
+                print(f"[PathwayResearch] Location=florida: {len(florida_schools)} FL schools -> {len(transfer_partners)} selected")
 
             else:  # miami or default
                 # Prioritize Miami-area schools, then other FL schools
@@ -226,7 +297,7 @@ For software: No required license.
                 other_fl.sort(key=lambda x: x.get("_ranking_score", 0), reverse=True)
 
                 transfer_partners = miami_schools[:3] + other_fl[:2]
-                print(f"[PathwayResearch] Location=miami: {len(miami_schools)} Miami schools, {len(other_fl)} other FL → {len(transfer_partners)} selected")
+                print(f"[PathwayResearch] Location=miami: {len(miami_schools)} Miami schools, {len(other_fl)} other FL -> {len(transfer_partners)} selected")
 
             print(f"[PathwayResearch] Filtered to {len(transfer_partners)} unique transfer partners")
 

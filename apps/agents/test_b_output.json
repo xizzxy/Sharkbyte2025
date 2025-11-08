@@ -1,0 +1,250 @@
+{
+  "paths": {
+    "cheapest": {
+      "id": "cheapest",
+      "name": "Most Affordable Path",
+      "total_cost": 141600,
+      "duration": "6.0 years",
+      "steps": [
+        {
+          "id": "step-0",
+          "type": "program",
+          "institution": "Miami Dade College",
+          "duration": "2 years",
+          "cost": 6800,
+          "prerequisites": [],
+          "description": "Engineering Associate in Science (AA)",
+          "url": "https://www.mdc.edu/engineering/"
+        },
+        {
+          "id": "step-1",
+          "type": "program",
+          "institution": "University of Central Florida",
+          "duration": "2 years",
+          "cost": 84800,
+          "prerequisites": [
+            "step-0"
+          ],
+          "description": "BS Mechanical Engineering",
+          "url": "https://www.ucf.edu/degree/mechanical-engineering-bsme/"
+        },
+        {
+          "id": "step-2",
+          "type": "masters",
+          "institution": "University of Central Florida",
+          "duration": "2 years",
+          "cost": 50000,
+          "prerequisites": [
+            "step-1"
+          ],
+          "description": "MS in Engineering Associate in Science",
+          "url": ""
+        }
+      ],
+      "roi": 1.8055555555555556
+    },
+    "fastest": {
+      "id": "fastest",
+      "name": "Fastest Path",
+      "total_cost": 141600,
+      "duration": "6.0 years",
+      "steps": [
+        {
+          "id": "step-0",
+          "type": "program",
+          "institution": "Miami Dade College",
+          "duration": "2 years",
+          "cost": 6800,
+          "prerequisites": [],
+          "description": "Engineering Associate in Science (AA)",
+          "url": "https://www.mdc.edu/engineering/"
+        },
+        {
+          "id": "step-1",
+          "type": "program",
+          "institution": "University of Florida",
+          "duration": "2 years",
+          "cost": 84800,
+          "prerequisites": [
+            "step-0"
+          ],
+          "description": "BS Mechanical Engineering",
+          "url": "https://www.mae.ufl.edu/"
+        },
+        {
+          "id": "step-2",
+          "type": "masters",
+          "institution": "University of Florida",
+          "duration": "2 years",
+          "cost": 50000,
+          "prerequisites": [
+            "step-1"
+          ],
+          "description": "MS in Engineering Associate in Science",
+          "url": ""
+        }
+      ],
+      "roi": 1.4444444444444446
+    },
+    "prestige": {
+      "id": "prestige",
+      "name": "Prestige Path",
+      "total_cost": 158800,
+      "duration": "6.0 years",
+      "steps": [
+        {
+          "id": "step-0",
+          "type": "program",
+          "institution": "Miami Dade College",
+          "duration": "2 years",
+          "cost": 24000,
+          "prerequisites": [],
+          "description": "Engineering Associate in Science (AA)",
+          "url": "https://www.mdc.edu/engineering/"
+        },
+        {
+          "id": "step-1",
+          "type": "program",
+          "institution": "Massachusetts Institute of Technology",
+          "duration": "2 years",
+          "cost": 84800,
+          "prerequisites": [
+            "step-0"
+          ],
+          "description": "BS Mechanical Engineering",
+          "url": "https://meche.mit.edu/"
+        },
+        {
+          "id": "step-2",
+          "type": "masters",
+          "institution": "Massachusetts Institute of Technology",
+          "duration": "2 years",
+          "cost": 50000,
+          "prerequisites": [
+            "step-1"
+          ],
+          "description": "MS in Engineering Associate in Science",
+          "url": ""
+        }
+      ],
+      "roi": 2.7083333333333335
+    }
+  },
+  "nodes": [
+    {
+      "id": "node-0",
+      "type": "mdc",
+      "data": {
+        "label": "MDC: Engineering Associate in Science",
+        "cost": 6800,
+        "duration": "2 years",
+        "url": "https://www.mdc.edu/engineering/",
+        "tier": "AA"
+      },
+      "position": {
+        "x": 250,
+        "y": 0
+      }
+    },
+    {
+      "id": "node-1",
+      "type": "university",
+      "data": {
+        "label": "Stanford University: BS Mechanical Engineering",
+        "cost": 13000,
+        "duration": "2 years",
+        "url": "https://me.stanford.edu/",
+        "tier": "Tier 3",
+        "ranking_label": "Regional University",
+        "degree": "BS"
+      },
+      "position": {
+        "x": 250,
+        "y": 150
+      }
+    },
+    {
+      "id": "node-2",
+      "type": "university",
+      "data": {
+        "label": "Carnegie Mellon University: BS Mechanical Engineering",
+        "cost": 13000,
+        "duration": "2 years",
+        "url": "https://www.meche.engineering.cmu.edu/",
+        "tier": "Tier 3",
+        "ranking_label": "Regional University",
+        "degree": "BS"
+      },
+      "position": {
+        "x": 550,
+        "y": 150
+      }
+    },
+    {
+      "id": "node-3",
+      "type": "university",
+      "data": {
+        "label": "Georgia Institute of Technology: BS Mechanical Engineering",
+        "cost": 13000,
+        "duration": "2 years",
+        "url": "https://www.me.gatech.edu/",
+        "tier": "Tier 3",
+        "ranking_label": "Regional University",
+        "degree": "BS"
+      },
+      "position": {
+        "x": 850,
+        "y": 150
+      }
+    },
+    {
+      "id": "node-4",
+      "type": "masters",
+      "data": {
+        "label": "MS Mechanical Engineering",
+        "institution": "Stanford University",
+        "cost": 63440.0,
+        "duration": "2 years",
+        "url": "",
+        "degree": "MS"
+      },
+      "position": {
+        "x": 250,
+        "y": 300
+      }
+    }
+  ],
+  "edges": [
+    {
+      "id": "edge-0",
+      "source": "node-0",
+      "target": "node-1",
+      "label": "2+2 Transfer Agreement"
+    },
+    {
+      "id": "edge-1",
+      "source": "node-1",
+      "target": "node-4",
+      "label": "Graduate School"
+    }
+  ],
+  "citations": [
+    {
+      "id": "1",
+      "title": "MDC Pathways for Mechanical Engineer",
+      "url": "https://www.mdc.edu/",
+      "accessed_at": "2025-11-08T12:16:30.007366"
+    }
+  ],
+  "metadata": {
+    "generated_at": "2025-11-08T12:16:33.811401",
+    "confidence": 0.85,
+    "career": "Mechanical Engineer",
+    "category": "STEM-Engineering",
+    "salary_outlook": {
+      "median_salary": 96000.0,
+      "growth_rate": "Average",
+      "job_outlook": "Average"
+    }
+  }
+}

@@ -2,7 +2,7 @@
 
 import { useState } from 'react'
 import { useRouter } from 'next/navigation'
-import { Sparkles, ArrowRight, Loader2, GraduationCap, TrendingUp, DollarSign } from 'lucide-react'
+import { Sparkles, ArrowRight, Loader2, GraduationCap, TrendingUp, DollarSign, AlertTriangle } from 'lucide-react'
 import QuizForm from '@/components/QuizForm'
 
 export default function HomePage() {
@@ -182,7 +182,10 @@ export default function HomePage() {
               <>
                 {error && (
                   <div className="mb-6 bg-red-900/40 backdrop-blur-sm border-2 border-red-500/50 rounded-xl p-4 text-red-200 animate-fade-in relative">
-                    <p className="font-semibold">⚠️ Oops! Something went wrong</p>
+                    <p className="font-semibold flex items-center gap-2">
+                      <AlertTriangle className="w-5 h-5" />
+                      Oops! Something went wrong
+                    </p>
                     <p className="text-sm mt-1 text-red-300">{error}</p>
                     <button
                       onClick={() => setError('')}
@@ -202,7 +205,10 @@ export default function HomePage() {
 
           {/* Trust Indicators */}
           <div className="mt-12 text-center text-sm text-gray-400 animate-fade-in">
-            <p className="mb-2">✨ Powered by Google Vertex AI • Real data from BLS.gov & College Scorecard</p>
+            <p className="mb-2 flex items-center justify-center gap-2">
+              <Sparkles className="w-4 h-4 text-cyan-400" />
+              Powered by Google Vertex AI • Real data from BLS.gov & College Scorecard
+            </p>
             <p className="flex items-center justify-center gap-2">
               <span className="w-2 h-2 bg-green-500 rounded-full animate-pulse shadow-lg shadow-green-500/50"></span>
               Your data is secure and never shared

@@ -1,0 +1,14 @@
+{
+  "career": "Mechanical Engineer",
+  "current_education": "hs",
+  "gpa": 3.5,
+  "budget": "medium",
+  "timeline": "normal",
+  "location": "florida",
+  "goals": ["masters", "internship"],
+  "has_transfer_credits": false,
+  "veteran_status": false,
+  "work_schedule": "full-time-student",
+  "learning_preferences": ["hands-on", "in-person"],
+  "priority": "cost"
+}

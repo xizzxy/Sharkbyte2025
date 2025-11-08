@@ -1,0 +1,254 @@
+{
+  "paths": {
+    "cheapest": {
+      "id": "cheapest",
+      "name": "Most Affordable Path",
+      "total_cost": 141600,
+      "duration": "6.0 years",
+      "steps": [
+        {
+          "id": "step-0",
+          "type": "program",
+          "institution": "Miami Dade College",
+          "duration": "2 years",
+          "cost": 6800,
+          "prerequisites": [],
+          "description": "Computer Science Associate in Science (AA)",
+          "url": "https://www.mdc.edu/stem/"
+        },
+        {
+          "id": "step-1",
+          "type": "program",
+          "institution": "University of Central Florida",
+          "duration": "2 years",
+          "cost": 84800,
+          "prerequisites": [
+            "step-0"
+          ],
+          "description": "BS Computer Science",
+          "url": "https://www.cs.ucf.edu/"
+        },
+        {
+          "id": "step-2",
+          "type": "masters",
+          "institution": "University of Central Florida",
+          "duration": "2 years",
+          "cost": 50000,
+          "prerequisites": [
+            "step-1"
+          ],
+          "description": "MS in Computer Science",
+          "url": ""
+        }
+      ],
+      "roi": 6.1
+    },
+    "fastest": {
+      "id": "fastest",
+      "name": "Fastest Path",
+      "total_cost": 141600,
+      "duration": "6.0 years",
+      "steps": [
+        {
+          "id": "step-0",
+          "type": "program",
+          "institution": "Miami Dade College",
+          "duration": "2 years",
+          "cost": 6800,
+          "prerequisites": [],
+          "description": "Computer Science Associate in Science (AA)",
+          "url": "https://www.mdc.edu/stem/"
+        },
+        {
+          "id": "step-1",
+          "type": "program",
+          "institution": "Arizona State University",
+          "duration": "2 years",
+          "cost": 84800,
+          "prerequisites": [
+            "step-0"
+          ],
+          "description": "BS Computer Science",
+          "url": "https://www.asu.edu/academics/programs/computer-science"
+        },
+        {
+          "id": "step-2",
+          "type": "masters",
+          "institution": "Arizona State University",
+          "duration": "2 years",
+          "cost": 50000,
+          "prerequisites": [
+            "step-1"
+          ],
+          "description": "MS in Computer Science",
+          "url": ""
+        }
+      ],
+      "roi": 6.1
+    },
+    "prestige": {
+      "id": "prestige",
+      "name": "Prestige Path",
+      "total_cost": 158800,
+      "duration": "6.0 years",
+      "steps": [
+        {
+          "id": "step-0",
+          "type": "program",
+          "institution": "Miami Dade College",
+          "duration": "2 years",
+          "cost": 24000,
+          "prerequisites": [],
+          "description": "Computer Science Associate in Science (AA)",
+          "url": "https://www.mdc.edu/stem/"
+        },
+        {
+          "id": "step-1",
+          "type": "program",
+          "institution": "Massachusetts Institute of Technology",
+          "duration": "2 years",
+          "cost": 84800,
+          "prerequisites": [
+            "step-0"
+          ],
+          "description": "BS Computer Science",
+          "url": "https://www.eecs.mit.edu/"
+        },
+        {
+          "id": "step-2",
+          "type": "masters",
+          "institution": "Massachusetts Institute of Technology",
+          "duration": "2 years",
+          "cost": 50000,
+          "prerequisites": [
+            "step-1"
+          ],
+          "description": "MS in Computer Science",
+          "url": ""
+        }
+      ],
+      "roi": 6.5
+    }
+  },
+  "nodes": [
+    {
+      "id": "node-0",
+      "type": "mdc",
+      "data": {
+        "label": "MDC: Computer Science Associate in Science",
+        "cost": 6800,
+        "duration": "2 years",
+        "url": "https://www.mdc.edu/stem/",
+        "tier": "AA",
+        "path_type": null
+      },
+      "position": {
+        "x": 250,
+        "y": 0
+      }
+    },
+    {
+      "id": "node-1",
+      "type": "university",
+      "data": {
+        "label": "Stanford University: BS Computer Science",
+        "cost": 13000,
+        "duration": "2 years",
+        "url": "https://cs.stanford.edu/",
+        "tier": "Tier 3",
+        "ranking_label": "Regional University",
+        "degree": "BS",
+        "path_type": null
+      },
+      "position": {
+        "x": 250,
+        "y": 150
+      }
+    },
+    {
+      "id": "node-2",
+      "type": "university",
+      "data": {
+        "label": "Carnegie Mellon University: BS Computer Science",
+        "cost": 13000,
+        "duration": "2 years",
+        "url": "https://www.cs.cmu.edu/",
+        "tier": "Tier 3",
+        "ranking_label": "Regional University",
+        "degree": "BS",
+        "path_type": null
+      },
+      "position": {
+        "x": 550,
+        "y": 150
+      }
+    },
+    {
+      "id": "node-3",
+      "type": "university",
+      "data": {
+        "label": "Arizona State University: BS Computer Science",
+        "cost": 13000,
+        "duration": "2 years",
+        "url": "https://www.asu.edu/academics/programs/computer-science",
+        "tier": "Tier 3",
+        "ranking_label": "Regional University",
+        "degree": "BS",
+        "path_type": "fastest"
+      },
+      "position": {
+        "x": 850,
+        "y": 150
+      }
+    },
+    {
+      "id": "node-4",
+      "type": "masters",
+      "data": {
+        "label": "MS Computer Science",
+        "institution": "Stanford University",
+        "cost": 63440.0,
+        "duration": "2 years",
+        "url": "",
+        "degree": "MS"
+      },
+      "position": {
+        "x": 250,
+        "y": 300
+      }
+    }
+  ],
+  "edges": [
+    {
+      "id": "edge-0",
+      "source": "node-0",
+      "target": "node-1",
+      "label": "2+2 Transfer Agreement"
+    },
+    {
+      "id": "edge-1",
+      "source": "node-1",
+      "target": "node-4",
+      "label": "Graduate School"
+    }
+  ],
+  "citations": [
+    {
+      "id": "1",
+      "title": "MDC Pathways for Software Developer",
+      "url": "https://www.mdc.edu/",
+      "accessed_at": "2025-11-08T15:25:26.828332"
+    }
+  ],
+  "metadata": {
+    "generated_at": "2025-11-08T15:25:30.379333",
+    "confidence": 0.85,
+    "career": "Software Developer",
+    "category": "STEM-Technology",
+    "salary_outlook": {
+      "median_salary": 110000.0,
+      "growth_rate": "Much faster than average",
+      "job_outlook": "Much faster than average"
+    }
+  }
+}

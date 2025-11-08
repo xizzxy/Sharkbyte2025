@@ -1,7 +1,7 @@
 'use client'
 
 import { useState } from 'react'
-import { ChevronRight } from 'lucide-react'
+import { ChevronRight, Cog, Zap, Building2, LandPlot, Briefcase, BarChart3, GraduationCap, BookOpen, Award, Trophy, DollarSign, Clock, MapPin, User, Target } from 'lucide-react'
 
 interface QuizFormProps {
   onSubmit: (data: any) => void
@@ -50,14 +50,14 @@ export default function QuizForm({ onSubmit }: QuizFormProps) {
             required
           >
             <option value="">Select your dream career...</option>
-            <option value="Mechanical Engineer">⚙️ Mechanical Engineer</option>
-            <option value="Electrical Engineer">⚡ Electrical Engineer</option>
-            <option value="Civil Engineer">🏗️ Civil Engineer</option>
-            <option value="Software Developer">💻 Software Developer</option>
-            <option value="Registered Nurse">🏥 Registered Nurse</option>
-            <option value="Architect">🏛️ Architect</option>
-            <option value="Accountant">💼 Accountant</option>
-            <option value="Data Scientist">📊 Data Scientist</option>
+            <option value="Mechanical Engineer">Mechanical Engineer</option>
+            <option value="Electrical Engineer">Electrical Engineer</option>
+            <option value="Civil Engineer">Civil Engineer</option>
+            <option value="Software Developer">Software Developer</option>
+            <option value="Registered Nurse">Registered Nurse</option>
+            <option value="Architect">Architect</option>
+            <option value="Accountant">Accountant</option>
+            <option value="Data Scientist">Data Scientist</option>
           </select>
         </label>
       </div>
@@ -73,10 +73,10 @@ export default function QuizForm({ onSubmit }: QuizFormProps) {
             onChange={(e) => setFormData({ ...formData, current_education: e.target.value as any })}
             className="w-full px-5 py-4 rounded-xl border-2 border-gray-600 bg-gray-700/50 text-white focus:border-cyan-500 focus:ring-4 focus:ring-cyan-500/20 outline-none transition-all text-lg shadow-sm hover:border-cyan-400 backdrop-blur-sm"
           >
-            <option value="hs">🎓 High school graduate</option>
-            <option value="some_college">📚 Some college credits</option>
-            <option value="aa">🎖️ Associate's degree (AA/AS)</option>
-            <option value="ba">🏆 Bachelor's degree</option>
+            <option value="hs">High school graduate</option>
+            <option value="some_college">Some college credits</option>
+            <option value="aa">Associate's degree (AA/AS)</option>
+            <option value="ba">Bachelor's degree</option>
           </select>
         </label>
       </div>
@@ -112,9 +112,9 @@ export default function QuizForm({ onSubmit }: QuizFormProps) {
         </span>
         <div className="grid md:grid-cols-3 gap-4">
           {[
-            { value: 'low', icon: '💰', label: 'Under $30K', desc: 'Community college focus' },
-            { value: 'medium', icon: '💰💰', label: '$30K - $80K', desc: 'Balanced approach' },
-            { value: 'high', icon: '💰💰💰', label: 'Over $80K', desc: 'Prestige options' }
+            { value: 'low', icon: <DollarSign className="w-8 h-8" />, label: 'Under $30K', desc: 'Community college focus' },
+            { value: 'medium', icon: <DollarSign className="w-8 h-8" />, label: '$30K - $80K', desc: 'Balanced approach' },
+            { value: 'high', icon: <DollarSign className="w-8 h-8" />, label: 'Over $80K', desc: 'Prestige options' }
           ].map((option) => (
             <label
               key={option.value}
@@ -132,7 +132,7 @@ export default function QuizForm({ onSubmit }: QuizFormProps) {
                 onChange={(e) => setFormData({ ...formData, budget: e.target.value as any })}
                 className="sr-only"
               />
-              <div className="text-3xl mb-2">{option.icon}</div>
+              <div className="text-cyan-400 mb-2 flex justify-center">{option.icon}</div>
               <div className="font-bold text-white">{option.label}</div>
               <div className="text-sm text-gray-400 mt-1">{option.desc}</div>
             </label>
@@ -147,9 +147,9 @@ export default function QuizForm({ onSubmit }: QuizFormProps) {
         </span>
         <div className="grid md:grid-cols-3 gap-4">
           {[
-            { value: 'fast', icon: '⚡', label: 'Fastest', desc: '2-3 years' },
-            { value: 'normal', icon: '📅', label: 'Standard', desc: '4 years' },
-            { value: 'flexible', icon: '🕐', label: 'Flexible', desc: '5+ years' }
+            { value: 'fast', icon: <Zap className="w-8 h-8" />, label: 'Fastest', desc: '2-3 years' },
+            { value: 'normal', icon: <Clock className="w-8 h-8" />, label: 'Standard', desc: '4 years' },
+            { value: 'flexible', icon: <Clock className="w-8 h-8" />, label: 'Flexible', desc: '5+ years' }
           ].map((option) => (
             <label
               key={option.value}
@@ -167,7 +167,7 @@ export default function QuizForm({ onSubmit }: QuizFormProps) {
                 onChange={(e) => setFormData({ ...formData, timeline: e.target.value as any })}
                 className="sr-only"
               />
-              <div className="text-3xl mb-2">{option.icon}</div>
+              <div className="text-purple-400 mb-2 flex justify-center">{option.icon}</div>
               <div className="font-bold text-white">{option.label}</div>
               <div className="text-sm text-gray-400 mt-1">{option.desc}</div>
             </label>
@@ -186,9 +186,9 @@ export default function QuizForm({ onSubmit }: QuizFormProps) {
             onChange={(e) => setFormData({ ...formData, location: e.target.value as any })}
             className="w-full px-5 py-4 rounded-xl border-2 border-gray-600 bg-gray-700/50 text-white focus:border-cyan-500 focus:ring-4 focus:ring-cyan-500/20 outline-none transition-all text-lg shadow-sm hover:border-cyan-400 backdrop-blur-sm"
           >
-            <option value="miami">🏖️ Must stay in Miami</option>
-            <option value="florida">🌴 Anywhere in Florida</option>
-            <option value="anywhere">🌎 Open to out-of-state</option>
+            <option value="miami">Must stay in Miami</option>
+            <option value="florida">Anywhere in Florida</option>
+            <option value="anywhere">Open to out-of-state</option>
           </select>
         </label>
       </div>
@@ -204,8 +204,8 @@ export default function QuizForm({ onSubmit }: QuizFormProps) {
             onChange={(e) => setFormData({ ...formData, work_schedule: e.target.value as any })}
             className="w-full px-5 py-4 rounded-xl border-2 border-gray-600 bg-gray-700/50 text-white focus:border-cyan-500 focus:ring-4 focus:ring-cyan-500/20 outline-none transition-all text-lg shadow-sm hover:border-cyan-400 backdrop-blur-sm"
           >
-            <option value="full-time-student">👨‍🎓 Full-time student (not working)</option>
-            <option value="part-time-student">💼 Part-time student (working full-time)</option>
+            <option value="full-time-student">Full-time student (not working)</option>
+            <option value="part-time-student">Part-time student (working full-time)</option>
           </select>
         </label>
       </div>
@@ -246,12 +246,12 @@ export default function QuizForm({ onSubmit }: QuizFormProps) {
         </span>
         <div className="grid md:grid-cols-2 gap-3">
           {[
-            { value: 'internship', label: '💼 Internship experience' },
-            { value: 'research', label: '🔬 Research opportunities' },
-            { value: 'masters', label: '🎓 Master\'s degree' },
-            { value: 'phd', label: '👨‍🔬 PhD program' },
-            { value: 'PE_license', label: '⚖️ Professional license' },
-            { value: 'startup', label: '🚀 Start my own business' }
+            { value: 'internship', label: 'Internship experience', icon: <Briefcase className="w-5 h-5" /> },
+            { value: 'research', label: 'Research opportunities', icon: <Target className="w-5 h-5" /> },
+            { value: 'masters', label: 'Master\'s degree', icon: <GraduationCap className="w-5 h-5" /> },
+            { value: 'phd', label: 'PhD program', icon: <Award className="w-5 h-5" /> },
+            { value: 'PE_license', label: 'Professional license', icon: <Trophy className="w-5 h-5" /> },
+            { value: 'startup', label: 'Start my own business', icon: <Target className="w-5 h-5" /> }
           ].map((goal) => (
             <label
               key={goal.value}
@@ -267,6 +267,7 @@ export default function QuizForm({ onSubmit }: QuizFormProps) {
                 onChange={() => handleGoalToggle(goal.value)}
                 className="w-5 h-5 text-purple-500 rounded border-gray-500 bg-gray-700 focus:ring-purple-500 focus:ring-offset-gray-800"
               />
+              <div className="text-purple-300">{goal.icon}</div>
               <span className="font-medium text-white">{goal.label}</span>
             </label>
           ))}
@@ -283,8 +284,9 @@ export default function QuizForm({ onSubmit }: QuizFormProps) {
         <ChevronRight className="w-6 h-6 group-hover:translate-x-1 transition-transform relative z-10" />
       </button>
 
-      <p className="text-center text-sm text-gray-400">
-        This usually takes 10-30 seconds ⏱️
+      <p className="text-center text-sm text-gray-400 flex items-center justify-center gap-2">
+        <Clock className="w-4 h-4" />
+        This usually takes 10-30 seconds
       </p>
     </form>
   )

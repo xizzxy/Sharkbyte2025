@@ -2,14 +2,43 @@
 
 import { Suspense, useState, useEffect } from 'react'
 import { useSearchParams } from 'next/navigation'
-import { DollarSign, Clock, TrendingUp, Download, Share2, BookOpen, Sparkles, ArrowLeft, CheckCircle2 } from 'lucide-react'
+import { DollarSign, Clock, TrendingUp, Download, Share2, BookOpen, Sparkles, ArrowLeft, CheckCircle2, PiggyBank, Zap, Trophy, BarChart3 } from 'lucide-react'
 import RoadmapGraph from '@/components/RoadmapGraph'
+import FloatingChatButton from '@/components/FloatingChatButton'
+import ChatWidget from '@/components/ChatWidget'
 import Link from 'next/link'
 
 function RoadmapContent() {
   const [roadmapData, setRoadmapData] = useState<any>(null)
   const [selectedPath, setSelectedPath] = useState<'cheapest' | 'fastest' | 'prestige'>('cheapest')
   const [isLoading, setIsLoading] = useState(true)
+  const [isChatOpen, setIsChatOpen] = useState(false)
+  const [sidebarWidth, setSidebarWidth] = useState(384) // 96 * 4 = 384px (w-96)
+  const [isResizing, setIsResizing] = useState(false)
+  const [chatButtonPosition, setChatButtonPosition] = useState({ x: 0, y: 0 })
+
+  // Handle sidebar resize
+  useEffect(() => {
+    const handleMouseMove = (e: MouseEvent) => {
+      if (isResizing) {
+        const newWidth = e.clientX
+        setSidebarWidth(Math.max(280, Math.min(newWidth, 600)))
+      }
+    }
+
+    const handleMouseUp = () => {
+      setIsResizing(false)
+    }
+
+    if (isResizing) {
+      document.addEventListener('mousemove', handleMouseMove)
+      document.addEventListener('mouseup', handleMouseUp)
+      return () => {
+        document.removeEventListener('mousemove', handleMouseMove)
+        document.removeEventListener('mouseup', handleMouseUp)
+      }
+    }
+  }, [isResizing])
 
   // Load roadmap data from sessionStorage on mount
   useEffect(() => {
@@ -119,7 +148,10 @@ function RoadmapContent() {
       {/* Main Content */}
       <div className="flex-1 flex overflow-hidden">
         {/* Left Sidebar */}
-        <div className="w-full md:w-96 border-r border-gray-800 bg-gray-900/95 backdrop-blur-sm overflow-y-auto">
+        <div
+          className="border-r border-gray-800 bg-gray-900/95 backdrop-blur-sm overflow-y-hidden hover:overflow-y-auto relative"
+          style={{ width: `${sidebarWidth}px`, minWidth: '280px', maxWidth: '600px' }}
+        >
           <div className="p-6 space-y-6">
             {/* Path Tabs */}
             <div>
@@ -130,7 +162,8 @@ function RoadmapContent() {
               <div className="space-y-3">
                 <PathCard
                   id="cheapest"
-                  title="💰 Most Affordable"
+                  icon={<PiggyBank className="w-5 h-5" />}
+                  title="Most Affordable"
                   cost={paths.cheapest?.total_cost || 0}
                   duration={paths.cheapest?.duration || '4 years'}
                   roi={paths.cheapest?.roi || 0}
@@ -139,7 +172,8 @@ function RoadmapContent() {
                 />
                 <PathCard
                   id="fastest"
-                  title="⚡ Fastest Path"
+                  icon={<Zap className="w-5 h-5" />}
+                  title="Fastest Path"
                   cost={paths.fastest?.total_cost || 0}
                   duration={paths.fastest?.duration || '3 years'}
                   roi={paths.fastest?.roi || 0}
@@ -148,7 +182,8 @@ function RoadmapContent() {
                 />
                 <PathCard
                   id="prestige"
-                  title="🏆 Prestige Path"
+                  icon={<Trophy className="w-5 h-5" />}
+                  title="Prestige Path"
                   cost={paths.prestige?.total_cost || 0}
                   duration={paths.prestige?.duration || '4 years'}
                   roi={paths.prestige?.roi || 0}
@@ -245,6 +280,15 @@ function RoadmapContent() {
               </div>
             )}
           </div>
+
+          {/* Resize Handle */}
+          <div
+            className={`absolute right-0 top-0 bottom-0 w-1 bg-transparent hover:bg-cyan-500 transition-colors ${
+              isResizing ? 'bg-cyan-500 cursor-col-resize' : 'cursor-col-resize'
+            }`}
+            onMouseDown={() => setIsResizing(true)}
+            style={{ cursor: 'col-resize' }}
+          />
         </div>
 
         {/* Right Side - Graph */}
@@ -254,8 +298,8 @@ function RoadmapContent() {
           ) : (
             <div className="flex items-center justify-center h-full bg-white/50 backdrop-blur-sm">
               <div className="text-center max-w-md p-8">
-                <div className="text-6xl mb-4">📊</div>
-                <h3 className="text-xl font-bold mb-2">Roadmap Graph Coming Soon</h3>
+                <BarChart3 className="w-24 h-24 mx-auto mb-4 text-gray-400 animate-pulse" />
+                <h3 className="text-xl font-bold mb-2 text-gray-700">Roadmap Graph Coming Soon</h3>
                 <p className="text-gray-600">
                   The visual graph will be generated once we have complete pathway data from our agents.
                 </p>
@@ -264,12 +308,26 @@ function RoadmapContent() {
           )}
         </div>
       </div>
+
+      {/* Floating Chatbot */}
+      <FloatingChatButton
+        onClick={() => setIsChatOpen(!isChatOpen)}
+        isOpen={isChatOpen}
+        onPositionChange={setChatButtonPosition}
+      />
+      <ChatWidget
+        isOpen={isChatOpen}
+        career={metadata.career}
+        selectedPath={selectedPath}
+        buttonPosition={chatButtonPosition}
+      />
     </div>
   )
 }
 
 function PathCard({
   id,
+  icon,
   title,
   cost,
   duration,
@@ -278,6 +336,7 @@ function PathCard({
   onClick
 }: {
   id: string
+  icon: React.ReactNode
   title: string
   cost: number
   duration: string
@@ -286,21 +345,32 @@ function PathCard({
   onClick: () => void
 }) {
   const gradients = {
-    cheapest: 'from-green-700 to-emerald-800 border-green-500',
-    fastest: 'from-blue-700 to-cyan-800 border-blue-500',
-    prestige: 'from-purple-700 to-pink-800 border-purple-500'
+    cheapest: 'from-green-700 to-emerald-800 border-green-500 shadow-green-500/50',
+    fastest: 'from-blue-700 to-cyan-800 border-blue-500 shadow-blue-500/50',
+    prestige: 'from-purple-700 to-pink-800 border-purple-500 shadow-purple-500/50'
+  }
+
+  const iconColors = {
+    cheapest: 'text-green-300',
+    fastest: 'text-blue-300',
+    prestige: 'text-purple-300'
   }
 
   return (
     <button
       onClick={onClick}
-      className={`w-full text-left p-5 rounded-2xl border-2 cursor-pointer transition-all duration-200 ${
+      className={`w-full text-left p-5 rounded-2xl border-2 cursor-pointer transition-all duration-300 group ${
         selected
-          ? `bg-gradient-to-br ${gradients[id as keyof typeof gradients]} shadow-xl scale-105`
-          : 'bg-gray-800/60 border-gray-700 hover:border-cyan-600 shadow-sm hover:shadow-lg hover:bg-gray-800'
+          ? `bg-gradient-to-br ${gradients[id as keyof typeof gradients]} shadow-2xl scale-105 animate-in`
+          : 'bg-gray-800/60 border-gray-700 hover:border-cyan-600 shadow-sm hover:shadow-lg hover:bg-gray-800 hover:scale-102'
       }`}
     >
-      <div className="font-bold text-lg mb-3 text-white">{title}</div>
+      <div className="flex items-center gap-2 font-bold text-lg mb-3 text-white">
+        <span className={`${selected ? iconColors[id as keyof typeof iconColors] : 'text-gray-400'} transition-all duration-300 ${selected ? 'animate-pulse' : 'group-hover:scale-110'}`}>
+          {icon}
+        </span>
+        {title}
+      </div>
       <div className="space-y-2 text-sm">
         <div className="flex items-center justify-between">
           <span className="text-gray-400 flex items-center gap-1">

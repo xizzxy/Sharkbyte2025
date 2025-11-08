@@ -125,19 +125,73 @@ async def list_careers():
     }
 
 
+class ChatRequest(BaseModel):
+    """Request body for /api/chat endpoint"""
+    message: str
+    system_prompt: str
+
+
+class ChatResponse(BaseModel):
+    """Response from /api/chat endpoint"""
+    response: str
+
+
+@app.post("/api/chat", response_model=ChatResponse)
+async def chat(request: ChatRequest):
+    """
+    Chat endpoint for roadmap Q&A using Google AI
+
+    Args:
+        request: User message and system prompt
+
+    Returns:
+        AI-generated response
+    """
+    try:
+        import google.generativeai as genai
+
+        # Configure Google AI with API key
+        api_key = os.getenv("GEMINI_API_KEY")
+        if not api_key:
+            raise ValueError("GEMINI_API_KEY not found in environment")
+
+        genai.configure(api_key=api_key)
+
+        # Create model
+        model = genai.GenerativeModel(
+            "gemini-2.0-flash-exp",
+            system_instruction=request.system_prompt
+        )
+
+        # Generate response
+        response = model.generate_content(
+            request.message,
+            generation_config=genai.GenerationConfig(
+                temperature=0.7,
+                max_output_tokens=500,
+            )
+        )
+
+        return ChatResponse(response=response.text)
+
+    except Exception as e:
+        print(f"[ERROR] Chat failed: {e}")
+        raise HTTPException(status_code=500, detail=f"Chat error: {str(e)}")
+
+
 if __name__ == "__main__":
     import uvicorn
 
     port = int(os.getenv("AGENT_SERVER_PORT", 8000))
 
     print(f"""
-    ╔═══════════════════════════════════════════════════════╗
-    ║       CareerPilot AI - Agent Server                  ║
-    ║                                                       ║
-    ║  Server: http://localhost:{port}                       ║
-    ║  Docs:   http://localhost:{port}/docs                  ║
-    ║  Health: http://localhost:{port}/health                ║
-    ╚═══════════════════════════════════════════════════════╝
+    ========================================================
+         CareerPilot AI - Agent Server
+
+      Server: http://localhost:{port}
+      Docs:   http://localhost:{port}/docs
+      Health: http://localhost:{port}/health
+    ========================================================
     """)
 
     uvicorn.run(

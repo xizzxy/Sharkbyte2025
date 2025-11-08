@@ -36,6 +36,12 @@
         "abet_accredited": false,
         "mdc_articulation": "seamless",
         "url": "https://cnhs.fiu.edu/"
+      },
+      {
+        "name": "Bachelor of Architecture",
+        "abet_accredited": false,
+        "mdc_articulation": "2+2",
+        "url": "https://carta.fiu.edu/architecture/"
       }
     ]
   },
@@ -114,6 +120,12 @@
         "abet_accredited": true,
         "mdc_articulation": "transfer",
         "url": "https://www.cise.ufl.edu/"
+      },
+      {
+        "name": "Bachelor of Design in Architecture",
+        "abet_accredited": false,
+        "mdc_articulation": "transfer",
+        "url": "https://dcp.ufl.edu/architecture/"
       }
     ]
   },
@@ -147,8 +159,112 @@
         "abet_accredited": true,
         "mdc_articulation": null,
         "url": "https://meche.mit.edu/"
+      },
+      {
+        "name": "BS Computer Science",
+        "abet_accredited": true,
+        "mdc_articulation": null,
+        "url": "https://www.eecs.mit.edu/"
+      },
+      {
+        "name": "BS Electrical Engineering",
+        "abet_accredited": true,
+        "mdc_articulation": null,
+        "url": "https://www.eecs.mit.edu/"
       }
     ],
     "prestige_tier": true
+  },
+  {
+    "name": "Stanford University",
+    "abbreviation": "Stanford",
+    "location": "Stanford, CA",
+    "type": "private",
+    "in_state_tuition": 59339,
+    "out_of_state_tuition": 59339,
+    "programs": [
+      {
+        "name": "BS Computer Science",
+        "abet_accredited": true,
+        "mdc_articulation": null,
+        "url": "https://cs.stanford.edu/"
+      },
+      {
+        "name": "BS Mechanical Engineering",
+        "abet_accredited": true,
+        "mdc_articulation": null,
+        "url": "https://me.stanford.edu/"
+      }
+    ],
+    "prestige_tier": true
+  },
+  {
+    "name": "Carnegie Mellon University",
+    "abbreviation": "CMU",
+    "location": "Pittsburgh, PA",
+    "type": "private",
+    "in_state_tuition": 61344,
+    "out_of_state_tuition": 61344,
+    "programs": [
+      {
+        "name": "BS Computer Science",
+        "abet_accredited": true,
+        "mdc_articulation": null,
+        "url": "https://www.cs.cmu.edu/"
+      },
+      {
+        "name": "BS Mechanical Engineering",
+        "abet_accredited": true,
+        "mdc_articulation": null,
+        "url": "https://www.meche.engineering.cmu.edu/"
+      }
+    ],
+    "prestige_tier": true
+  },
+  {
+    "name": "University of California Berkeley",
+    "abbreviation": "UC Berkeley",
+    "location": "Berkeley, CA",
+    "type": "public",
+    "in_state_tuition": 14254,
+    "out_of_state_tuition": 44008,
+    "programs": [
+      {
+        "name": "BS Computer Science",
+        "abet_accredited": true,
+        "mdc_articulation": null,
+        "url": "https://eecs.berkeley.edu/"
+      },
+      {
+        "name": "BS Mechanical Engineering",
+        "abet_accredited": true,
+        "mdc_articulation": null,
+        "url": "https://me.berkeley.edu/"
+      }
+    ],
+    "prestige_tier": true
+  },
+  {
+    "name": "Arizona State University",
+    "abbreviation": "ASU",
+    "location": "Tempe, AZ",
+    "type": "public",
+    "in_state_tuition": 11618,
+    "out_of_state_tuition": 29428,
+    "programs": [
+      {
+        "name": "BS Computer Science",
+        "abet_accredited": true,
+        "mdc_articulation": "transfer",
+        "url": "https://www.asu.edu/academics/programs/computer-science"
+      },
+      {
+        "name": "BS Mechanical Engineering",
+        "abet_accredited": true,
+        "mdc_articulation": "transfer",
+        "url": "https://www.asu.edu/academics/programs/mechanical-engineering"
+      }
+    ],
+    "prestige_tier": false
   }
 ]

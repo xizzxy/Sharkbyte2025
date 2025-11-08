@@ -1,0 +1,14 @@
+{
+  "career": "Accountant",
+  "current_education": "hs",
+  "gpa": 3.2,
+  "budget": "low",
+  "timeline": "flexible",
+  "location": "miami",
+  "goals": ["internship", "PE_license"],
+  "has_transfer_credits": false,
+  "veteran_status": false,
+  "work_schedule": "part-time-student",
+  "learning_preferences": ["in-person"],
+  "priority": "cost"
+}

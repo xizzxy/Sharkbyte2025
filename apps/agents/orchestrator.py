@@ -112,7 +112,7 @@ class OrchestratorAgent:
             profile, pathway_result, cost_result, salary_result, quiz_data, optimal_paths
         )
 
-        print(f"[Orchestrator] ✓ Roadmap complete: {len(roadmap['nodes'])} nodes, "
+        print(f"[Orchestrator] [OK] Roadmap complete: {len(roadmap['nodes'])} nodes, "
               f"{len(roadmap['edges'])} edges")
 
         return roadmap
@@ -237,14 +237,14 @@ Return ONLY the JSON, no additional text."""
 
             # Validate recommendations
             if not self._validate_gemini_recommendations(recommendations):
-                print("[Orchestrator] ⚠️ Gemini recommendations failed validation, using fallback")
+                print("[Orchestrator] [WARN] Gemini recommendations failed validation, using fallback")
                 return self._get_fallback_recommendations(pathway_result, location_pref)
 
-            print(f"[Orchestrator] ✓ Gemini recommendations validated successfully")
+            print(f"[Orchestrator] [OK] Gemini recommendations validated successfully")
             return recommendations
 
         except Exception as e:
-            print(f"[Orchestrator] ❌ Gemini call failed: {e}")
+            print(f"[Orchestrator] [ERROR] Gemini call failed: {e}")
             print(f"[Orchestrator] Using fallback recommendations")
             return self._get_fallback_recommendations(pathway_result, location_pref)
 
@@ -252,7 +252,8 @@ Return ONLY the JSON, no additional text."""
         """Format university options with all relevant data for Gemini"""
         universities = []
 
-        for i, transfer in enumerate(pathway_result.transfer_options[:8]):  # Top 8 options
+        # Send ALL transfer options to Gemini (not just top 8) for better selection
+        for i, transfer in enumerate(pathway_result.transfer_options):
             ranking = self._get_university_ranking(transfer.university)
             location = ranking.get("location", "Unknown")
 
@@ -295,7 +296,7 @@ Return ONLY the JSON, no additional text."""
         try:
             # Check all three paths exist
             if not all(key in recommendations for key in ["cheapest", "fastest", "prestige"]):
-                print("[Orchestrator] ❌ Validation failed: Missing path recommendations")
+                print("[Orchestrator] [ERROR] Validation failed: Missing path recommendations")
                 return False
 
             # Check universities are different
@@ -306,25 +307,25 @@ Return ONLY the JSON, no additional text."""
             ]
 
             if len(set(universities)) < 3:
-                print(f"[Orchestrator] ❌ Validation failed: Duplicate universities: {universities}")
+                print(f"[Orchestrator] [ERROR] Validation failed: Duplicate universities: {universities}")
                 return False
 
             # Check all paths have required fields
             for path_name, path in recommendations.items():
                 required_fields = ["university", "program", "tier", "estimated_bs_cost"]
                 if not all(field in path for field in required_fields):
-                    print(f"[Orchestrator] ❌ Validation failed: {path_name} missing required fields")
+                    print(f"[Orchestrator] [ERROR] Validation failed: {path_name} missing required fields")
                     return False
 
                 # Check reasonable cost values
                 if path["estimated_bs_cost"] <= 0 or path["estimated_bs_cost"] > 500000:
-                    print(f"[Orchestrator] ❌ Validation failed: {path_name} has unrealistic BS cost")
+                    print(f"[Orchestrator] [ERROR] Validation failed: {path_name} has unrealistic BS cost")
                     return False
 
             return True
 
         except Exception as e:
-            print(f"[Orchestrator] ❌ Validation error: {e}")
+            print(f"[Orchestrator] [ERROR] Validation error: {e}")
             return False
 
     def _get_fallback_recommendations(self, pathway_result, location_pref: str) -> Dict[str, Any]:
@@ -445,14 +446,15 @@ Return ONLY the JSON, no additional text."""
         # Extract user goals
         goals = quiz_data.get('goals', [])
 
-        # Build paths
+        # Build paths using Gemini's optimal selections
         cheapest_path = self._build_path(
             "cheapest",
             "Most Affordable Path",
             cost_result.cheapest_path,
             pathway_result,
-            salary_result.roi_years,
-            goals
+            salary_result.median_salary,
+            goals,
+            optimal_paths.get("cheapest") if optimal_paths else None
         )
 
         fastest_path = self._build_path(
@@ -460,8 +462,9 @@ Return ONLY the JSON, no additional text."""
             "Fastest Path",
             cost_result.fastest_path,
             pathway_result,
-            salary_result.roi_years * 0.8,  # Faster path = faster ROI
-            goals
+            salary_result.median_salary,
+            goals,
+            optimal_paths.get("fastest") if optimal_paths else None
         )
 
         prestige_path = self._build_path(
@@ -469,12 +472,22 @@ Return ONLY the JSON, no additional text."""
             "Prestige Path",
             cost_result.prestige_path,
             pathway_result,
-            salary_result.roi_years * 1.5,  # Higher cost = slower ROI
-            goals
+            salary_result.median_salary,
+            goals,
+            optimal_paths.get("prestige") if optimal_paths else None
         )
 
-        # Build nodes and edges for React Flow
-        nodes, edges = self._build_graph(pathway_result, profile, goals)
+        # Build nodes and edges for React Flow with path information
+        nodes, edges = self._build_graph(
+            pathway_result,
+            profile,
+            goals,
+            paths={
+                "cheapest": cheapest_path,
+                "fastest": fastest_path,
+                "prestige": prestige_path
+            }
+        )
 
         # Collect citations
         citations = pathway_result.citations
@@ -501,23 +514,47 @@ Return ONLY the JSON, no additional text."""
             }
         }
 
-    def _build_path(self, path_id: str, name: str, cost_data: Dict, pathway_result, roi: float, goals: List[str]) -> Dict:
+    def _calculate_roi(self, total_cost: float, median_salary: float, total_years: float) -> float:
+        """Calculate ROI years using actual path cost"""
+        # After-tax salary
+        net_salary = median_salary * 0.75  # 25% tax rate
+        # Opportunity cost
+        opportunity_cost = 25000 * total_years  # Could have earned min wage
+        # Total investment
+        total_investment = total_cost + opportunity_cost
+        # Years to break even
+        if net_salary <= 35000:  # Baseline living expenses
+            return 99.9  # Invalid ROI
+        roi_years = total_investment / (net_salary - 35000)
+        return round(roi_years, 1)
+
+    def _build_path(self, path_id: str, name: str, cost_data: Dict, pathway_result, median_salary: float, goals: List[str], optimal_path: Dict[str, Any] = None) -> Dict:
         """Build a single path with steps including internships/research and grad school"""
         steps = []
         step_id = 0
         career = pathway_result.mdc_programs[0].name if pathway_result.mdc_programs else "General"
 
-        # Add MDC program (if applicable)
-        if pathway_result.mdc_programs and cost_data.get("breakdown", {}).get("mdc", 0) > 0:
+        # Get selected university from Gemini's optimal path (if available)
+        selected_university = None
+        selected_program = None
+        if optimal_path:
+            selected_university = optimal_path.get("university")
+            selected_program = optimal_path.get("program")
+            print(f"[Orchestrator] Building {path_id} path with Gemini selection: {selected_university}")
+
+        # Add MDC program (if applicable) - cost is typically $6800 for 2 years in-state
+        if pathway_result.mdc_programs:
             mdc_program = pathway_result.mdc_programs[0]
+            # MDC cost: $3400/year * 2 years = $6800
+            mdc_cost = cost_data.get("breakdown", {}).get("mdc", 6800)
             steps.append({
                 "id": f"step-{step_id}",
                 "type": "program",
                 "institution": "Miami Dade College",
                 "duration": "2 years",
-                "cost": cost_data["breakdown"].get("mdc", 0),
+                "cost": mdc_cost,
                 "prerequisites": [],
-                "description": f"{mdc_program.name} ({mdc_program.code})",
+                "description": f"{mdc_program.name} ({mdc_program.code if mdc_program.code else 'AA'})",
                 "url": mdc_program.url
             })
             step_id += 1
@@ -556,22 +593,45 @@ Return ONLY the JSON, no additional text."""
                 })
                 step_id += 1
 
-        # Add university program
-        if pathway_result.transfer_options:
-            university_cost = cost_data["breakdown"].get("university", 0)
-            for transfer in pathway_result.transfer_options[:1]:  # Take first option
-                steps.append({
-                    "id": f"step-{step_id}",
-                    "type": "program",
-                    "institution": transfer.university,
-                    "duration": "2 years",
-                    "cost": university_cost,
-                    "prerequisites": [f"step-{step_id-1}"] if step_id > 0 else [],
-                    "description": transfer.program,
-                    "url": transfer.url
-                })
-                step_id += 1
-                break
+        # Add university program - use Gemini's selection if available
+        university_name = None
+        program_name = None
+        program_url = ""
+
+        if selected_university and selected_program:
+            # Use Gemini's optimal selection
+            university_name = selected_university
+            program_name = selected_program
+            # Try to find matching URL from transfer options
+            for transfer in pathway_result.transfer_options:
+                if selected_university.upper() in transfer.university.upper() or transfer.university.upper() in selected_university.upper():
+                    program_url = transfer.url
+                    break
+        elif pathway_result.transfer_options:
+            # Fallback to first transfer option
+            university_name = pathway_result.transfer_options[0].university
+            program_name = pathway_result.transfer_options[0].program
+            program_url = pathway_result.transfer_options[0].url
+
+        if university_name:
+            # Calculate cost using optimal_path data if available, otherwise use cost_data
+            if optimal_path and "estimated_bs_cost" in optimal_path:
+                university_cost = optimal_path["estimated_bs_cost"]
+                print(f"[Orchestrator] Using Gemini BS cost: ${university_cost:,.0f}")
+            else:
+                university_cost = cost_data.get("breakdown", {}).get("university", 0) or cost_data.get("total", 0)
+
+            steps.append({
+                "id": f"step-{step_id}",
+                "type": "program",
+                "institution": university_name,
+                "duration": "2 years",
+                "cost": university_cost,
+                "prerequisites": [f"step-{step_id-1}"] if step_id > 0 else [],
+                "description": program_name,
+                "url": program_url
+            })
+            step_id += 1
 
         # Add certifications
         for cert in pathway_result.certifications:
@@ -603,14 +663,19 @@ Return ONLY the JSON, no additional text."""
                 step_id += 1
 
         # Add Masters program if user selected it
-        if "masters" in goals and pathway_result.transfer_options:
-            university = pathway_result.transfer_options[0].university
+        if "masters" in goals and university_name:
             degree_name = self._get_degree_name(career)
-            ms_cost = self._calculate_graduate_cost(university, "masters", 2)
+            # Use Gemini's MS cost if available, otherwise calculate
+            if optimal_path and "estimated_ms_cost" in optimal_path and optimal_path["estimated_ms_cost"] > 0:
+                ms_cost = optimal_path["estimated_ms_cost"]
+                print(f"[Orchestrator] Using Gemini MS cost: ${ms_cost:,.0f}")
+            else:
+                ms_cost = self._calculate_graduate_cost(university_name, "masters", 2)
+
             steps.append({
                 "id": f"step-{step_id}",
                 "type": "masters",
-                "institution": university,
+                "institution": university_name,
                 "duration": "2 years",
                 "cost": ms_cost,
                 "prerequisites": [f"step-{step_id-1}"] if step_id > 0 else [],
@@ -620,14 +685,19 @@ Return ONLY the JSON, no additional text."""
             step_id += 1
 
         # Add PhD program if user selected it
-        if "phd" in goals and pathway_result.transfer_options:
-            university = pathway_result.transfer_options[0].university
+        if "phd" in goals and university_name:
             degree_name = self._get_degree_name(career)
-            phd_cost = self._calculate_graduate_cost(university, "phd", 5)  # Average 5 years
+            # Use Gemini's PhD cost if available, otherwise calculate
+            if optimal_path and "estimated_phd_cost" in optimal_path and optimal_path["estimated_phd_cost"] > 0:
+                phd_cost = optimal_path["estimated_phd_cost"]
+                print(f"[Orchestrator] Using Gemini PhD cost: ${phd_cost:,.0f}")
+            else:
+                phd_cost = self._calculate_graduate_cost(university_name, "phd", 5)  # Average 5 years
+
             steps.append({
                 "id": f"step-{step_id}",
                 "type": "phd",
-                "institution": university,
+                "institution": university_name,
                 "duration": "4-6 years",
                 "cost": phd_cost,
                 "prerequisites": [f"step-{step_id-1}"] if step_id > 0 else [],
@@ -636,12 +706,9 @@ Return ONLY the JSON, no additional text."""
             })
             step_id += 1
 
-        # Calculate accurate total from all steps
+        # Calculate accurate total from all steps (always use this for accuracy)
         calculated_total = sum(step.get("cost", 0) for step in steps)
-
-        # Use calculated total if it's significantly different from CostEstimator total
-        # (This handles cases where orchestrator adds MS/PhD that CostEstimator didn't include)
-        final_total = calculated_total if calculated_total > cost_data["total"] * 1.1 else cost_data["total"]
+        final_total = calculated_total
 
         # Calculate total duration
         total_years = 0
@@ -654,23 +721,43 @@ Return ONLY the JSON, no additional text."""
                 except:
                     pass
 
+        # Calculate ROI using actual cost and salary
+        calculated_roi = self._calculate_roi(final_total, median_salary, total_years)
+
+        print(f"[Orchestrator] path={path_id} total_cost=${final_total:,.0f} total_years={total_years:.1f} roi={calculated_roi:.1f} salary=${median_salary:,.0f} (sum of {len(steps)} steps)")
+
         return {
             "id": path_id,
             "name": name,
             "total_cost": final_total,
             "duration": f"{total_years:.1f} years" if total_years > 0 else "4 years",
             "steps": steps,
-            "roi": roi
+            "roi": calculated_roi
         }
 
-    def _build_graph(self, pathway_result, profile, goals: List[str]) -> tuple:
+    def _build_graph(self, pathway_result, profile, goals: List[str], paths: Dict[str, Any] = None) -> tuple:
         """Build nodes and edges for React Flow visualization with rankings and enhanced types"""
         nodes = []
         edges = []
         node_id = 0
         y_pos = 0
 
-        # MDC node
+        # Helper to determine which path a university belongs to
+        def get_path_type(university_name):
+            if not paths:
+                return None
+            # Check which path(s) include this university
+            path_types = []
+            for path_name, path_data in paths.items():
+                for step in path_data.get("steps", []):
+                    if step.get("institution", "").lower() == university_name.lower():
+                        path_types.append(path_name)
+                        break
+            # Return the first match (or could return all if a node is in multiple paths)
+            return path_types[0] if path_types else None
+
+        # MDC node - appears in all paths
+        prev_node = None
         if pathway_result.mdc_programs:
             mdc = pathway_result.mdc_programs[0]
             nodes.append({
@@ -681,7 +768,8 @@ Return ONLY the JSON, no additional text."""
                     "cost": 6800,
                     "duration": "2 years",
                     "url": mdc.url,
-                    "tier": "AA"
+                    "tier": "AA",
+                    "path_type": None  # MDC is common to all paths
                 },
                 "position": {"x": 250, "y": y_pos}
             })
@@ -689,10 +777,12 @@ Return ONLY the JSON, no additional text."""
             node_id += 1
             y_pos += 150
 
-        # University nodes with ranking data
+        # University nodes with ranking data and path tags
         last_university_node = None
         for i, transfer in enumerate(pathway_result.transfer_options[:3]):
             ranking = self._get_university_ranking(transfer.university)
+            path_type = get_path_type(transfer.university)
+
             nodes.append({
                 "id": f"node-{node_id}",
                 "type": "university",
@@ -703,18 +793,19 @@ Return ONLY the JSON, no additional text."""
                     "url": transfer.url,
                     "tier": f"Tier {ranking.get('tier', 3)}",
                     "ranking_label": ranking.get('ranking_label', ''),
-                    "degree": "BS"
+                    "degree": "BS",
+                    "path_type": path_type
                 },
                 "position": {"x": 250 + i * 300, "y": y_pos}
             })
 
-            # Edge from MDC to university
-            if pathway_result.mdc_programs and i == 0:
+            # Edge from MDC to university (only if MDC node exists)
+            if prev_node and i == 0:
                 edges.append({
                     "id": f"edge-{len(edges)}",
                     "source": prev_node,
                     "target": f"node-{node_id}",
-                    "label": transfer.articulation
+                    "label": transfer.articulation if hasattr(transfer, 'articulation') else "Transfer"
                 })
                 last_university_node = f"node-{node_id}"
 

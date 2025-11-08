@@ -44,15 +44,21 @@ class CostEstimatorAgent(BaseAgent):
     def _get_housing_cost(self, city: str) -> Dict[str, float]:
         """Get housing cost data for a city"""
         if city in self.housing_data:
-            return self.housing_data[city]
+            housing = self.housing_data[city]
+            monthly = housing.get("avg_rent_shared", 1100) + housing.get("avg_food", 350) + housing.get("avg_transport", 110)
+            print(f"[Housing] city={city} monthly=${monthly:,.0f}")
+            return housing
 
         # Try fuzzy matching
         for city_key in self.housing_data.keys():
             if city.lower() in city_key.lower() or city_key.lower() in city.lower():
-                return self.housing_data[city_key]
+                housing = self.housing_data[city_key]
+                monthly = housing.get("avg_rent_shared", 1100) + housing.get("avg_food", 350) + housing.get("avg_transport", 110)
+                print(f"[Housing] city={city} (matched={city_key}) monthly=${monthly:,.0f}")
+                return housing
 
         # Default to Miami costs
-        print(f"[CostEstimator] No housing data for {city}, using Miami defaults")
+        print(f"[Housing] city={city} monthly=$1560 (WARNING: No data found, using Miami defaults)")
         return {
             "avg_rent_shared": 1100,
             "avg_rent_studio": 1600,
@@ -66,14 +72,40 @@ class CostEstimatorAgent(BaseAgent):
         for uni_key, uni_data in self.rankings_data.items():
             if uni_key.lower() in university_name.lower() or university_name.lower() in uni_key.lower():
                 if in_state and "tuition_in_state" in uni_data:
-                    return uni_data["tuition_in_state"]
+                    tuition = uni_data["tuition_in_state"]
+                    if tuition > 0:
+                        print(f"[Tuition] source=seed in_state={in_state} {university_name}=${tuition:,.0f}/yr")
+                        return tuition
                 elif not in_state and "tuition_out_of_state" in uni_data:
-                    return uni_data["tuition_out_of_state"]
+                    tuition = uni_data["tuition_out_of_state"]
+                    if tuition > 0:
+                        print(f"[Tuition] source=seed in_state={in_state} {university_name}=${tuition:,.0f}/yr")
+                        return tuition
 
         # Fallback to College Scorecard
         costs = get_college_costs(university_name)
         tuition_key = "in_state_tuition" if in_state else "out_of_state_tuition"
-        return costs.get(tuition_key, 10000)
+        scorecard_tuition = costs.get(tuition_key, 0)
+
+        # If scorecard returns 0 or null, use a reasonable default based on school type
+        if scorecard_tuition > 0:
+            print(f"[Tuition] source=scorecard in_state={in_state} {university_name}=${scorecard_tuition:,.0f}/yr")
+            return scorecard_tuition
+
+        # Last resort fallback - try rankings data one more time with any value
+        for uni_key, uni_data in self.rankings_data.items():
+            if uni_key.lower() in university_name.lower() or university_name.lower() in uni_key.lower():
+                fallback = uni_data.get("tuition_out_of_state", uni_data.get("tuition_in_state", 15000))
+                print(f"[Tuition] source=seed_fallback in_state={in_state} {university_name}=${fallback:,.0f}/yr")
+                return max(fallback, 10000)  # Enforce minimum $10k
+
+        # Generic fallback - use realistic minimums
+        if in_state:
+            fallback = 6000  # Typical FL public in-state
+        else:
+            fallback = 20000  # Typical FL public out-of-state
+        print(f"[Tuition] source=generic_fallback in_state={in_state} {university_name}=${fallback:,.0f}/yr (WARNING: No data found)")
+        return fallback
 
     def _get_university_location(self, university_name: str) -> str:
         """Get university location from rankings data"""
@@ -106,6 +138,7 @@ class CostEstimatorAgent(BaseAgent):
         # MDC costs (very low tuition, stay at home assumed)
         mdc_tuition_per_year = 3400 if in_state else 12000
         mdc_total = mdc_tuition_per_year * mdc_years
+        print(f"[CostEstimator] node=AA school=MDC tuition_y=${mdc_tuition_per_year:,.0f} years={mdc_years} housing_m=$0 total=${mdc_total:,.0f}")
 
         # University location and housing
         location = self._get_university_location(university_name)
@@ -129,7 +162,7 @@ class CostEstimatorAgent(BaseAgent):
 
         total = mdc_total + university_total + books + fees
 
-        print(f"[CostEstimator] {university_name} ({location}): Tuition=${tuition_per_year:.0f}/yr, Housing=${yearly_living:.0f}/yr, Total=${total:.0f}")
+        print(f"[CostEstimator] node=BS school={university_name} tuition_y=${tuition_per_year:,.0f} years={university_years} housing_m=${yearly_living/12:,.0f} total=${total:,.0f}")
 
         return {
             "mdc": mdc_total,
@@ -188,7 +221,7 @@ class CostEstimatorAgent(BaseAgent):
 
         total = total_tuition + total_living + books + fees
 
-        print(f"[CostEstimator] Masters at {university_name} ({location}): Tuition=${masters_tuition_per_year:.0f}/yr × {years}yr = ${total:.0f}")
+        print(f"[CostEstimator] node=MS school={university_name} tuition_y=${masters_tuition_per_year:,.0f} years={years} housing_m=${yearly_living/12:,.0f} total=${total:,.0f}")
 
         return {
             "tuition": total_tuition,
@@ -242,7 +275,7 @@ class CostEstimatorAgent(BaseAgent):
 
         total = total_living + books + fees
 
-        print(f"[CostEstimator] PhD at {university_name} ({location}): Living=${out_of_pocket_yearly:.0f}/yr × {years}yr = ${total:.0f} (tuition waived)")
+        print(f"[CostEstimator] node=PhD school={university_name} tuition_y=$0 years={years} housing_m=${out_of_pocket_yearly/12:,.0f} total=${total:,.0f} (tuition_waived+stipend)")
 
         return {
             "tuition": 0,  # Waived for funded PhD

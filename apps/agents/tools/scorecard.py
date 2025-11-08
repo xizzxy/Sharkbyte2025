@@ -95,17 +95,31 @@ def get_college_costs(institution_name: str) -> Dict[str, float]:
             "total_cost_of_attendance": 0.0
         }
 
-    latest = data.get("latest", {})
-    cost = latest.get("cost", {})
-    tuition = cost.get("tuition", {})
-    attendance = cost.get("attendance", {})
+    # Handle both flat and nested response formats
+    # Flat: {"latest.cost.tuition.in_state": 6565}
+    # Nested: {"latest": {"cost": {"tuition": {"in_state": 6565}}}}
 
-    return {
-        "in_state_tuition": float(tuition.get("in_state") or 0),
-        "out_of_state_tuition": float(tuition.get("out_of_state") or 0),
-        "net_price": float(cost.get("avg_net_price", {}).get("overall") or 0),
-        "total_cost_of_attendance": float(attendance.get("academic_year") or 0)
-    }
+    if "latest.cost.tuition.in_state" in data:
+        # Flat format
+        return {
+            "in_state_tuition": float(data.get("latest.cost.tuition.in_state") or 0),
+            "out_of_state_tuition": float(data.get("latest.cost.tuition.out_of_state") or 0),
+            "net_price": float(data.get("latest.cost.avg_net_price.overall") or 0),
+            "total_cost_of_attendance": float(data.get("latest.cost.attendance.academic_year") or 0)
+        }
+    else:
+        # Nested format
+        latest = data.get("latest", {})
+        cost = latest.get("cost", {})
+        tuition = cost.get("tuition", {})
+        attendance = cost.get("attendance", {})
+
+        return {
+            "in_state_tuition": float(tuition.get("in_state") or 0),
+            "out_of_state_tuition": float(tuition.get("out_of_state") or 0),
+            "net_price": float(cost.get("avg_net_price", {}).get("overall") or 0),
+            "total_cost_of_attendance": float(attendance.get("academic_year") or 0)
+        }
 
 
 def get_multiple_college_costs(institution_names: List[str]) -> Dict[str, Dict]:
@@ -246,6 +260,110 @@ def _get_fallback_college_data(institution_name: str) -> Optional[Dict]:
             "latest.completion.completion_rate_4yr_150nt": 0.88,
             "latest.student.size": 56567,
             "latest.cost.avg_net_price.overall": 9200
+        },
+        "Florida Atlantic University": {
+            "id": 133951,
+            "school.name": "Florida Atlantic University",
+            "school.city": "Boca Raton",
+            "school.state": "FL",
+            "latest.cost.tuition.in_state": 4879,
+            "latest.cost.tuition.out_of_state": 17324,
+            "latest.cost.attendance.academic_year": 19000,
+            "latest.admissions.admission_rate.overall": 0.59,
+            "latest.completion.completion_rate_4yr_150nt": 0.47,
+            "latest.student.size": 30808,
+            "latest.cost.avg_net_price.overall": 7500
+        },
+        "University of Central Florida": {
+            "id": 132903,
+            "school.name": "University of Central Florida",
+            "school.city": "Orlando",
+            "school.state": "FL",
+            "latest.cost.tuition.in_state": 6368,
+            "latest.cost.tuition.out_of_state": 22467,
+            "latest.cost.attendance.academic_year": 21000,
+            "latest.admissions.admission_rate.overall": 0.44,
+            "latest.completion.completion_rate_4yr_150nt": 0.70,
+            "latest.student.size": 68571,
+            "latest.cost.avg_net_price.overall": 8200
+        },
+        "Georgia Institute of Technology": {
+            "id": 139959,
+            "school.name": "Georgia Institute of Technology-Main Campus",
+            "school.city": "Atlanta",
+            "school.state": "GA",
+            "latest.cost.tuition.in_state": 12682,
+            "latest.cost.tuition.out_of_state": 33794,
+            "latest.cost.attendance.academic_year": 29000,
+            "latest.admissions.admission_rate.overall": 0.16,
+            "latest.completion.completion_rate_4yr_150nt": 0.87,
+            "latest.student.size": 39771,
+            "latest.cost.avg_net_price.overall": 14000
+        },
+        "Massachusetts Institute of Technology": {
+            "id": 166683,
+            "school.name": "Massachusetts Institute of Technology",
+            "school.city": "Cambridge",
+            "school.state": "MA",
+            "latest.cost.tuition.in_state": 57986,
+            "latest.cost.tuition.out_of_state": 57986,
+            "latest.cost.attendance.academic_year": 77020,
+            "latest.admissions.admission_rate.overall": 0.04,
+            "latest.completion.completion_rate_4yr_150nt": 0.94,
+            "latest.student.size": 11934,
+            "latest.cost.avg_net_price.overall": 19619
+        },
+        "Stanford University": {
+            "id": 243744,
+            "school.name": "Stanford University",
+            "school.city": "Stanford",
+            "school.state": "CA",
+            "latest.cost.tuition.in_state": 59339,
+            "latest.cost.tuition.out_of_state": 59339,
+            "latest.cost.attendance.academic_year": 82406,
+            "latest.admissions.admission_rate.overall": 0.04,
+            "latest.completion.completion_rate_4yr_150nt": 0.95,
+            "latest.student.size": 17651,
+            "latest.cost.avg_net_price.overall": 18279
+        },
+        "Carnegie Mellon University": {
+            "id": 211440,
+            "school.name": "Carnegie Mellon University",
+            "school.city": "Pittsburgh",
+            "school.state": "PA",
+            "latest.cost.tuition.in_state": 61344,
+            "latest.cost.tuition.out_of_state": 61344,
+            "latest.cost.attendance.academic_year": 79196,
+            "latest.admissions.admission_rate.overall": 0.11,
+            "latest.completion.completion_rate_4yr_150nt": 0.91,
+            "latest.student.size": 15818,
+            "latest.cost.avg_net_price.overall": 27558
+        },
+        "University of California Berkeley": {
+            "id": 110635,
+            "school.name": "University of California-Berkeley",
+            "school.city": "Berkeley",
+            "school.state": "CA",
+            "latest.cost.tuition.in_state": 14254,
+            "latest.cost.tuition.out_of_state": 44008,
+            "latest.cost.attendance.academic_year": 39040,
+            "latest.admissions.admission_rate.overall": 0.11,
+            "latest.completion.completion_rate_4yr_150nt": 0.92,
+            "latest.student.size": 42519,
+            "latest.cost.avg_net_price.overall": 16702
+        },
+        "Arizona State University": {
+            "id": 104151,
+            "school.name": "Arizona State University-Tempe",
+            "school.city": "Tempe",
+            "school.state": "AZ",
+            "latest.cost.tuition.in_state": 11618,
+            "latest.cost.tuition.out_of_state": 29428,
+            "latest.cost.attendance.academic_year": 28384,
+            "latest.admissions.admission_rate.overall": 0.88,
+            "latest.completion.completion_rate_4yr_150nt": 0.67,
+            "latest.student.size": 65492,
+            "latest.cost.avg_net_price.overall": 13897
         }
     }
 

@@ -1,0 +1,14 @@
+{
+  "career": "Software Developer",
+  "current_education": "hs",
+  "gpa": 3.8,
+  "budget": "high",
+  "timeline": "fast",
+  "location": "anywhere",
+  "goals": ["masters", "internship"],
+  "has_transfer_credits": false,
+  "veteran_status": false,
+  "work_schedule": "full-time-student",
+  "learning_preferences": ["online", "theory"],
+  "priority": "prestige"
+}

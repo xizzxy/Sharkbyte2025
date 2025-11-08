@@ -1,0 +1,75 @@
+{
+  "paths": {
+    "cheapest": {
+      "id": "cheapest",
+      "name": "Most Affordable Path",
+      "total_cost": 64562,
+      "duration": "2.0 years",
+      "steps": [
+        {
+          "id": "step-0",
+          "type": "program",
+          "institution": "University of Central Florida",
+          "duration": "2 years",
+          "cost": 64562,
+          "prerequisites": [],
+          "description": "Accounting",
+          "url": ""
+        }
+      ],
+      "roi": 2.1940928270042193
+    },
+    "fastest": {
+      "id": "fastest",
+      "name": "Fastest Path",
+      "total_cost": 75000,
+      "duration": "2.0 years",
+      "steps": [
+        {
+          "id": "step-0",
+          "type": "program",
+          "institution": "Florida International University",
+          "duration": "2 years",
+          "cost": 75000,
+          "prerequisites": [],
+          "description": "Accelerated Bachelor of Accounting to Master of Accounting",
+          "url": ""
+        }
+      ],
+      "roi": 1.7552742616033754
+    },
+    "prestige": {
+      "id": "prestige",
+      "name": "Prestige Path",
+      "total_cost": 80000,
+      "duration": "2.0 years",
+      "steps": [
+        {
+          "id": "step-0",
+          "type": "program",
+          "institution": "University of Florida",
+          "duration": "2 years",
+          "cost": 80000,
+          "prerequisites": [],
+          "description": "Accounting",
+          "url": ""
+        }
+      ],
+      "roi": 3.291139240506329
+    }
+  },
+  "nodes": [],
+  "edges": [],
+  "citations": [],
+  "metadata": {
+    "generated_at": "2025-11-08T12:16:40.436329",
+    "confidence": 0.85,
+    "career": "Accountant",
+    "category": "Business",
+    "salary_outlook": {
+      "median_salary": 79000.0,
+      "growth_rate": "Average",
+      "job_outlook": "Data not available"
+    }
+  }
+}
