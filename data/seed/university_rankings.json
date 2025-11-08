@@ -1,0 +1,254 @@
+{
+  "University of Florida": {
+    "tier": 1,
+    "ranking_label": "Top Research University",
+    "notes": "Highest ranked public university in Florida",
+    "national_rank": 28,
+    "location": "Gainesville, FL",
+    "tuition_in_state": 6380,
+    "tuition_out_of_state": 28658
+  },
+  "UF": {
+    "tier": 1,
+    "ranking_label": "Top Research University",
+    "notes": "Highest ranked public university in Florida",
+    "national_rank": 28,
+    "location": "Gainesville, FL",
+    "tuition_in_state": 6380,
+    "tuition_out_of_state": 28658
+  },
+  "University of Miami": {
+    "tier": 1,
+    "ranking_label": "Top Private Research University",
+    "notes": "Premier private research institution",
+    "national_rank": 55,
+    "location": "Coral Gables, FL",
+    "tuition_in_state": 56000,
+    "tuition_out_of_state": 56000
+  },
+  "UM": {
+    "tier": 1,
+    "ranking_label": "Top Private Research University",
+    "notes": "Premier private research institution",
+    "national_rank": 55,
+    "location": "Coral Gables, FL",
+    "tuition_in_state": 56000,
+    "tuition_out_of_state": 56000
+  },
+  "Florida State University": {
+    "tier": 2,
+    "ranking_label": "Strong Research & Graduate Programs",
+    "notes": "Excellent research opportunities and graduate programs",
+    "national_rank": 55,
+    "location": "Tallahassee, FL",
+    "tuition_in_state": 5656,
+    "tuition_out_of_state": 21683
+  },
+  "FSU": {
+    "tier": 2,
+    "ranking_label": "Strong Research & Graduate Programs",
+    "notes": "Excellent research opportunities and graduate programs",
+    "national_rank": 55,
+    "location": "Tallahassee, FL",
+    "tuition_in_state": 5656,
+    "tuition_out_of_state": 21683
+  },
+  "University of Central Florida": {
+    "tier": 2,
+    "ranking_label": "Large Engineering & CS Program",
+    "notes": "NASA partnerships and strong STEM programs",
+    "national_rank": 162,
+    "location": "Orlando, FL",
+    "tuition_in_state": 6368,
+    "tuition_out_of_state": 22467
+  },
+  "UCF": {
+    "tier": 2,
+    "ranking_label": "Large Engineering & CS Program",
+    "notes": "NASA partnerships and strong STEM programs",
+    "national_rank": 162,
+    "location": "Orlando, FL",
+    "tuition_in_state": 6368,
+    "tuition_out_of_state": 22467
+  },
+  "Florida Atlantic University": {
+    "tier": 2,
+    "ranking_label": "Strong AI/ML & Ocean Engineering",
+    "notes": "Cutting-edge AI research and ocean engineering",
+    "national_rank": 216,
+    "location": "Boca Raton, FL",
+    "tuition_in_state": 4879,
+    "tuition_out_of_state": 17324
+  },
+  "FAU": {
+    "tier": 2,
+    "ranking_label": "Strong AI/ML & Ocean Engineering",
+    "notes": "Cutting-edge AI research and ocean engineering",
+    "national_rank": 216,
+    "location": "Boca Raton, FL",
+    "tuition_in_state": 4879,
+    "tuition_out_of_state": 17324
+  },
+  "Florida International University": {
+    "tier": 2,
+    "ranking_label": "Best Miami Transfer Partner",
+    "notes": "Connect4Success partnership with MDC - seamless transfer",
+    "national_rank": 216,
+    "location": "Miami, FL",
+    "tuition_in_state": 6565,
+    "tuition_out_of_state": 18566
+  },
+  "FIU": {
+    "tier": 2,
+    "ranking_label": "Best Miami Transfer Partner",
+    "notes": "Connect4Success partnership with MDC - seamless transfer",
+    "national_rank": 216,
+    "location": "Miami, FL",
+    "tuition_in_state": 6565,
+    "tuition_out_of_state": 18566
+  },
+  "University of South Florida": {
+    "tier": 2,
+    "ranking_label": "Research University",
+    "notes": "Strong medical and engineering programs",
+    "national_rank": 142,
+    "location": "Tampa, FL",
+    "tuition_in_state": 6410,
+    "tuition_out_of_state": 17324
+  },
+  "USF": {
+    "tier": 2,
+    "ranking_label": "Research University",
+    "notes": "Strong medical and engineering programs",
+    "national_rank": 142,
+    "location": "Tampa, FL",
+    "tuition_in_state": 6410,
+    "tuition_out_of_state": 17324
+  },
+  "Georgia Institute of Technology": {
+    "tier": 1,
+    "ranking_label": "Top Engineering School",
+    "notes": "Elite engineering and technology programs",
+    "national_rank": 33,
+    "location": "Atlanta, GA",
+    "tuition_in_state": 12682,
+    "tuition_out_of_state": 33794
+  },
+  "Georgia Tech": {
+    "tier": 1,
+    "ranking_label": "Top Engineering School",
+    "notes": "Elite engineering and technology programs",
+    "national_rank": 33,
+    "location": "Atlanta, GA",
+    "tuition_in_state": 12682,
+    "tuition_out_of_state": 33794
+  },
+  "MIT": {
+    "tier": 1,
+    "ranking_label": "World's Best Engineering",
+    "notes": "#1 engineering school globally",
+    "national_rank": 2,
+    "location": "Cambridge, MA",
+    "tuition_in_state": 57986,
+    "tuition_out_of_state": 57986
+  },
+  "Carnegie Mellon University": {
+    "tier": 1,
+    "ranking_label": "Top CS & Engineering",
+    "notes": "Elite CS, robotics, and engineering",
+    "national_rank": 22,
+    "location": "Pittsburgh, PA",
+    "tuition_in_state": 61344,
+    "tuition_out_of_state": 61344
+  },
+  "Carnegie Mellon": {
+    "tier": 1,
+    "ranking_label": "Top CS & Engineering",
+    "notes": "Elite CS, robotics, and engineering",
+    "national_rank": 22,
+    "location": "Pittsburgh, PA",
+    "tuition_in_state": 61344,
+    "tuition_out_of_state": 61344
+  },
+  "University of California, Berkeley": {
+    "tier": 1,
+    "ranking_label": "Top Public University",
+    "notes": "Elite public research university",
+    "national_rank": 15,
+    "location": "Berkeley, CA",
+    "tuition_in_state": 14312,
+    "tuition_out_of_state": 44008
+  },
+  "UC Berkeley": {
+    "tier": 1,
+    "ranking_label": "Top Public University",
+    "notes": "Elite public research university",
+    "national_rank": 15,
+    "location": "Berkeley, CA",
+    "tuition_in_state": 14312,
+    "tuition_out_of_state": 44008
+  },
+  "University of Washington": {
+    "tier": 1,
+    "ranking_label": "Top CS & Research",
+    "notes": "Strong CS and engineering programs",
+    "national_rank": 40,
+    "location": "Seattle, WA",
+    "tuition_in_state": 12000,
+    "tuition_out_of_state": 39000
+  },
+  "Arizona State University": {
+    "tier": 2,
+    "ranking_label": "Innovation University",
+    "notes": "Largest public university, strong tech programs",
+    "national_rank": 121,
+    "location": "Tempe, AZ",
+    "tuition_in_state": 11400,
+    "tuition_out_of_state": 29900
+  },
+  "ASU": {
+    "tier": 2,
+    "ranking_label": "Innovation University",
+    "notes": "Largest public university, strong tech programs",
+    "national_rank": 121,
+    "location": "Tempe, AZ",
+    "tuition_in_state": 11400,
+    "tuition_out_of_state": 29900
+  },
+  "Stanford University": {
+    "tier": 1,
+    "ranking_label": "World's Top University",
+    "notes": "Elite private research institution",
+    "national_rank": 3,
+    "location": "Palo Alto, CA",
+    "tuition_in_state": 57000,
+    "tuition_out_of_state": 57000
+  },
+  "Stanford": {
+    "tier": 1,
+    "ranking_label": "World's Top University",
+    "notes": "Elite private research institution",
+    "national_rank": 3,
+    "location": "Palo Alto, CA",
+    "tuition_in_state": 57000,
+    "tuition_out_of_state": 57000
+  },
+  "Texas A&M University": {
+    "tier": 2,
+    "ranking_label": "Top Engineering & Research",
+    "notes": "Strong engineering and research programs",
+    "national_rank": 67,
+    "location": "College Station, TX",
+    "tuition_in_state": 13000,
+    "tuition_out_of_state": 40000
+  },
+  "Texas A&M": {
+    "tier": 2,
+    "ranking_label": "Top Engineering & Research",
+    "notes": "Strong engineering and research programs",
+    "national_rank": 67,
+    "location": "College Station, TX",
+    "tuition_in_state": 13000,
+    "tuition_out_of_state": 40000
+  }
+}

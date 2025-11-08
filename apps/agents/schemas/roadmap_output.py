@@ -29,7 +29,7 @@ class Path(BaseModel):
 class Node(BaseModel):
     """React Flow node"""
     id: str
-    type: Literal["mdc", "university", "cert", "license", "outcome"]
+    type: Literal["mdc", "university", "cert", "license", "outcome", "masters", "phd", "internship", "research"]
     data: Dict = Field(
         ...,
         description="Node data (label, cost, duration, url)"

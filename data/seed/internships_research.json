@@ -1,0 +1,214 @@
+{
+  "Mechanical Engineer": {
+    "internships": [
+      {
+        "name": "Lockheed Martin Engineering Internship",
+        "location": "Orlando, FL",
+        "url": "https://www.lockheedmartinjobs.com",
+        "timing": "Summer between Junior-Senior year"
+      },
+      {
+        "name": "NASA Kennedy Space Center Internships",
+        "location": "Cape Canaveral, FL",
+        "url": "https://intern.nasa.gov",
+        "timing": "Summer or Fall semester"
+      },
+      {
+        "name": "SpaceX Internship Program",
+        "location": "Cape Canaveral, FL",
+        "url": "https://www.spacex.com/careers",
+        "timing": "Summer between Sophomore-Junior year"
+      }
+    ],
+    "research": [
+      {
+        "name": "FIU Undergraduate Research in MAE",
+        "url": "https://mae.fiu.edu/research",
+        "timing": "During Junior year"
+      },
+      {
+        "name": "UF REU in Mechanical Engineering",
+        "url": "https://www.mae.ufl.edu/undergraduate/undergraduate-research/",
+        "timing": "Summer after Sophomore year"
+      }
+    ]
+  },
+  "Electrical Engineer": {
+    "internships": [
+      {
+        "name": "Northrop Grumman EE Internship",
+        "location": "Melbourne, FL",
+        "url": "https://www.northropgrumman.com/careers",
+        "timing": "Summer between Junior-Senior year"
+      },
+      {
+        "name": "Harris Corporation Internship",
+        "location": "Palm Bay, FL",
+        "url": "https://www.l3harris.com/careers",
+        "timing": "Summer internship"
+      }
+    ],
+    "research": [
+      {
+        "name": "UCF Power Systems REU",
+        "url": "https://www.ece.ucf.edu/undergraduate-research/",
+        "timing": "Summer research program"
+      }
+    ]
+  },
+  "Civil Engineer": {
+    "internships": [
+      {
+        "name": "Florida DOT Engineering Internship",
+        "location": "Statewide",
+        "url": "https://www.fdot.gov/careers",
+        "timing": "Summer internship"
+      },
+      {
+        "name": "Kimley-Horn Civil Engineering Intern",
+        "location": "Miami, FL",
+        "url": "https://www.kimley-horn.com/careers",
+        "timing": "Summer between Junior-Senior year"
+      }
+    ],
+    "research": [
+      {
+        "name": "FIU Sustainable Infrastructure Research",
+        "url": "https://cee.fiu.edu/research/",
+        "timing": "Junior year research"
+      }
+    ]
+  },
+  "Software Developer": {
+    "internships": [
+      {
+        "name": "Google STEP Internship (Miami/Remote)",
+        "location": "Miami or Remote",
+        "url": "https://buildyourfuture.withgoogle.com/programs/step",
+        "timing": "Summer after Freshman or Sophomore year"
+      },
+      {
+        "name": "Microsoft Explorer Internship",
+        "location": "Remote",
+        "url": "https://careers.microsoft.com/students",
+        "timing": "Summer internship"
+      },
+      {
+        "name": "Meta University Internship",
+        "location": "Remote",
+        "url": "https://www.metacareers.com/students",
+        "timing": "Summer between Sophomore-Junior year"
+      }
+    ],
+    "research": [
+      {
+        "name": "FAU REU in AI & Machine Learning",
+        "url": "https://www.cs.fau.edu/undergraduate-research/",
+        "timing": "Summer research program"
+      },
+      {
+        "name": "UCF Cyber Security REU",
+        "url": "https://www.cs.ucf.edu/reu/",
+        "timing": "10-week summer program"
+      }
+    ]
+  },
+  "Registered Nurse": {
+    "internships": [
+      {
+        "name": "Jackson Health Student Nurse Internship",
+        "location": "Miami, FL",
+        "url": "https://jacksonhealth.org/careers/students/",
+        "timing": "Summer after Junior year"
+      },
+      {
+        "name": "Baptist Health Nurse Extern Program",
+        "location": "Miami, FL",
+        "url": "https://baptisthealth.net/careers",
+        "timing": "During Senior year"
+      },
+      {
+        "name": "UF Health Shands Student Nurse Program",
+        "location": "Gainesville, FL",
+        "url": "https://ufhealth.org/careers",
+        "timing": "Summer internship"
+      }
+    ],
+    "research": [
+      {
+        "name": "UM Nursing Clinical Research Program",
+        "url": "https://www.miami.edu/sonhs/research/index.html",
+        "timing": "Senior year research"
+      }
+    ]
+  },
+  "Architect": {
+    "internships": [
+      {
+        "name": "Arquitectonica Internship",
+        "location": "Miami, FL",
+        "url": "https://www.arquitectonica.com/careers",
+        "timing": "Summer between Junior-Senior year"
+      },
+      {
+        "name": "Zyscovich Architects Intern",
+        "location": "Miami, FL",
+        "url": "https://www.zyscovich.com/careers",
+        "timing": "Summer internship"
+      }
+    ],
+    "research": [
+      {
+        "name": "FIU Sustainable Architecture Lab",
+        "url": "https://carta.fiu.edu/research/",
+        "timing": "Junior year research"
+      }
+    ]
+  },
+  "Accountant": {
+    "internships": [
+      {
+        "name": "Deloitte Audit Internship",
+        "location": "Miami, FL",
+        "url": "https://www2.deloitte.com/us/en/pages/careers/articles/join-deloitte-accounting-internships.html",
+        "timing": "Winter or Summer internship"
+      },
+      {
+        "name": "PwC Start Internship",
+        "location": "Miami or Orlando",
+        "url": "https://www.pwc.com/us/en/careers/campus.html",
+        "timing": "Summer between Junior-Senior year"
+      }
+    ],
+    "research": [
+      {
+        "name": "FIU Finance Undergraduate Research",
+        "url": "https://business.fiu.edu/faculty-research/index.html",
+        "timing": "Senior year research"
+      }
+    ]
+  },
+  "Data Scientist": {
+    "internships": [
+      {
+        "name": "JP Morgan Quantitative Research Internship",
+        "location": "Miami or Remote",
+        "url": "https://careers.jpmorgan.com/students",
+        "timing": "Summer between Junior-Senior year"
+      },
+      {
+        "name": "Goldman Sachs Summer Analyst",
+        "location": "Remote",
+        "url": "https://www.goldmansachs.com/careers/students",
+        "timing": "Summer internship"
+      }
+    ],
+    "research": [
+      {
+        "name": "UCF Data Science REU",
+        "url": "https://sciences.ucf.edu/statistics/undergraduate-research/",
+        "timing": "10-week summer program"
+      }
+    ]
+  }
+}

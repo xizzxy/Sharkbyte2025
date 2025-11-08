@@ -14,22 +14,30 @@ import ReactFlow, {
 import 'reactflow/dist/style.css'
 import { ExternalLink, Info } from 'lucide-react'
 
-// Custom Node Component
+// Custom Node Component with Dark Mode
 function CustomNode({ data }: { data: any }) {
   const [showTooltip, setShowTooltip] = useState(false)
 
   const getNodeStyle = () => {
     switch (data.type) {
       case 'mdc':
-        return 'bg-gradient-to-br from-cyan-100 to-blue-100 border-cyan-400 hover:shadow-cyan-300'
+        return 'bg-gradient-to-br from-cyan-600 to-blue-700 border-cyan-400 hover:shadow-cyan-500/50 text-white'
       case 'university':
-        return 'bg-gradient-to-br from-purple-100 to-pink-100 border-purple-400 hover:shadow-purple-300'
+        return 'bg-gradient-to-br from-purple-600 to-pink-700 border-purple-400 hover:shadow-purple-500/50 text-white'
+      case 'masters':
+        return 'bg-gradient-to-br from-indigo-600 to-violet-700 border-indigo-400 hover:shadow-indigo-500/50 text-white'
+      case 'phd':
+        return 'bg-gradient-to-br from-amber-600 to-yellow-700 border-amber-400 hover:shadow-amber-500/50 text-white'
       case 'cert':
-        return 'bg-gradient-to-br from-green-100 to-emerald-100 border-green-400 hover:shadow-green-300'
+        return 'bg-gradient-to-br from-green-600 to-emerald-700 border-green-400 hover:shadow-green-500/50 text-white'
       case 'license':
-        return 'bg-gradient-to-br from-yellow-100 to-orange-100 border-yellow-400 hover:shadow-yellow-300'
+        return 'bg-gradient-to-br from-yellow-600 to-orange-700 border-yellow-400 hover:shadow-yellow-500/50 text-white'
+      case 'internship':
+        return 'bg-gradient-to-br from-teal-600 to-cyan-700 border-teal-400 hover:shadow-teal-500/50 text-white'
+      case 'research':
+        return 'bg-gradient-to-br from-rose-600 to-pink-700 border-rose-400 hover:shadow-rose-500/50 text-white'
       default:
-        return 'bg-gradient-to-br from-gray-100 to-gray-200 border-gray-400'
+        return 'bg-gradient-to-br from-gray-700 to-gray-800 border-gray-500 text-white'
     }
   }
 
@@ -39,16 +47,38 @@ function CustomNode({ data }: { data: any }) {
       onMouseEnter={() => setShowTooltip(true)}
       onMouseLeave={() => setShowTooltip(false)}
     >
-      <div className="font-bold text-gray-900 mb-1 text-center text-sm">
+      {/* Tier Badge for Universities */}
+      {data.tier && (data.type === 'university' || data.type === 'masters' || data.type === 'phd') && (
+        <div className="absolute -top-2 -right-2 bg-gradient-to-r from-yellow-400 to-amber-500 text-white text-xs px-2 py-1 rounded-full font-bold shadow-lg border-2 border-white">
+          {data.tier}
+        </div>
+      )}
+
+      {/* Degree Badge */}
+      {data.degree && (
+        <div className="absolute -top-2 -left-2 bg-gradient-to-r from-blue-500 to-cyan-500 text-white text-xs px-2 py-1 rounded-full font-bold shadow-lg border-2 border-white">
+          {data.degree}
+        </div>
+      )}
+
+      <div className="font-bold mb-1 text-center text-sm drop-shadow-sm">
         {data.label}
       </div>
+
+      {/* Ranking Label */}
+      {data.ranking_label && (
+        <div className="text-xs text-center font-semibold mb-1 text-white/90 drop-shadow-sm">
+          {data.ranking_label}
+        </div>
+      )}
+
       {data.cost && (
-        <div className="text-xs text-gray-700 text-center font-semibold">
+        <div className="text-xs text-center font-semibold text-white/95 drop-shadow-sm">
           ${data.cost?.toLocaleString()}
         </div>
       )}
       {data.duration && (
-        <div className="text-xs text-gray-600 text-center">
+        <div className="text-xs text-center text-white/80">
           {data.duration}
         </div>
       )}
@@ -105,7 +135,7 @@ export default function RoadmapGraph({ nodes, edges }: RoadmapGraphProps) {
   }, [])
 
   return (
-    <div className="w-full h-full rounded-2xl overflow-hidden shadow-2xl border-2 border-gray-200 bg-white">
+    <div className="w-full h-full rounded-2xl overflow-hidden shadow-2xl border-2 border-gray-700 bg-gray-900">
       <ReactFlow
         nodes={nodesState}
         edges={edgesState}
@@ -115,44 +145,52 @@ export default function RoadmapGraph({ nodes, edges }: RoadmapGraphProps) {
         nodeTypes={nodeTypes}
         fitView
         attributionPosition="bottom-left"
-        className="bg-gradient-to-br from-gray-50 to-blue-50"
+        className="bg-gradient-to-br from-gray-900 via-slate-900 to-gray-950"
       >
-        <Background color="#94a3b8" gap={16} />
-        <Controls className="bg-white shadow-lg rounded-lg border border-gray-200" />
+        <Background color="#374151" gap={16} />
+        <Controls className="bg-gray-800 shadow-lg rounded-lg border border-gray-700" />
         <MiniMap
-          className="bg-white shadow-lg rounded-lg border border-gray-200"
+          className="bg-gray-800 shadow-lg rounded-lg border border-gray-700"
           nodeColor={(node) => {
             const type = node.data?.type
             switch (type) {
-              case 'mdc': return '#93c5fd'
-              case 'university': return '#c4b5fd'
-              case 'cert': return '#86efac'
-              case 'license': return '#fde047'
-              default: return '#e5e7eb'
+              case 'mdc': return '#0891b2'
+              case 'university': return '#9333ea'
+              case 'masters': return '#6366f1'
+              case 'phd': return '#f59e0b'
+              case 'cert': return '#10b981'
+              case 'license': return '#eab308'
+              case 'internship': return '#14b8a6'
+              case 'research': return '#f43f5e'
+              default: return '#6b7280'
             }
           }}
         />
       </ReactFlow>
 
       {/* Legend */}
-      <div className="absolute bottom-20 right-6 bg-white/95 backdrop-blur-sm rounded-xl shadow-xl p-4 border border-gray-200">
-        <div className="text-sm font-bold mb-3 text-gray-900">Legend</div>
+      <div className="absolute bottom-20 right-6 bg-gray-800/95 backdrop-blur-sm rounded-xl shadow-xl p-4 border border-gray-700">
+        <div className="text-sm font-bold mb-3 text-white">Legend</div>
         <div className="space-y-2 text-xs">
           <div className="flex items-center gap-2">
-            <div className="w-4 h-4 bg-gradient-to-br from-cyan-200 to-blue-200 border-2 border-cyan-400 rounded"></div>
-            <span className="text-gray-700">MDC Program</span>
+            <div className="w-4 h-4 bg-gradient-to-br from-cyan-600 to-blue-700 border-2 border-cyan-400 rounded"></div>
+            <span className="text-gray-300">MDC (AA)</span>
           </div>
           <div className="flex items-center gap-2">
-            <div className="w-4 h-4 bg-gradient-to-br from-purple-200 to-pink-200 border-2 border-purple-400 rounded"></div>
-            <span className="text-gray-700">University</span>
+            <div className="w-4 h-4 bg-gradient-to-br from-purple-600 to-pink-700 border-2 border-purple-400 rounded"></div>
+            <span className="text-gray-300">University (BS)</span>
           </div>
           <div className="flex items-center gap-2">
-            <div className="w-4 h-4 bg-gradient-to-br from-green-200 to-emerald-200 border-2 border-green-400 rounded"></div>
-            <span className="text-gray-700">Certification</span>
+            <div className="w-4 h-4 bg-gradient-to-br from-indigo-600 to-violet-700 border-2 border-indigo-400 rounded"></div>
+            <span className="text-gray-300">Masters (MS)</span>
           </div>
           <div className="flex items-center gap-2">
-            <div className="w-4 h-4 bg-gradient-to-br from-yellow-200 to-orange-200 border-2 border-yellow-400 rounded"></div>
-            <span className="text-gray-700">License</span>
+            <div className="w-4 h-4 bg-gradient-to-br from-amber-600 to-yellow-700 border-2 border-amber-400 rounded"></div>
+            <span className="text-gray-300">PhD</span>
+          </div>
+          <div className="flex items-center gap-2">
+            <div className="w-4 h-4 bg-gradient-to-br from-green-600 to-emerald-700 border-2 border-green-400 rounded"></div>
+            <span className="text-gray-300">Certification</span>
           </div>
         </div>
       </div>

@@ -1,0 +1,130 @@
+{
+  "Miami, FL": {
+    "school": ["Miami Dade College", "FIU"],
+    "avg_rent_shared": 1100,
+    "avg_rent_studio": 1600,
+    "avg_food": 350,
+    "avg_transport": 110,
+    "notes": "Miami has high rent but large scholarship opportunities and stay-at-home options."
+  },
+  "Boca Raton, FL": {
+    "school": ["FAU"],
+    "avg_rent_shared": 900,
+    "avg_rent_studio": 1350,
+    "avg_food": 330,
+    "avg_transport": 100,
+    "notes": "Lower rent than Miami, strong on-campus housing support."
+  },
+  "Gainesville, FL": {
+    "school": ["UF"],
+    "avg_rent_shared": 650,
+    "avg_rent_studio": 1000,
+    "avg_food": 300,
+    "avg_transport": 80,
+    "notes": "UF is one of the cheapest major cities for Florida college students."
+  },
+  "Tallahassee, FL": {
+    "school": ["FSU"],
+    "avg_rent_shared": 700,
+    "avg_rent_studio": 1050,
+    "avg_food": 290,
+    "avg_transport": 75,
+    "notes": "Very affordable college town with strong student housing."
+  },
+  "Orlando, FL": {
+    "school": ["UCF"],
+    "avg_rent_shared": 800,
+    "avg_rent_studio": 1200,
+    "avg_food": 320,
+    "avg_transport": 95,
+    "notes": "Many student housing communities and tech internships nearby."
+  },
+  "Tampa, FL": {
+    "school": ["USF", "UT"],
+    "avg_rent_shared": 850,
+    "avg_rent_studio": 1250,
+    "avg_food": 310,
+    "avg_transport": 90,
+    "notes": "Growing tech hub with affordable housing options."
+  },
+  "Coral Gables, FL": {
+    "school": ["UM", "University of Miami"],
+    "avg_rent_shared": 1200,
+    "avg_rent_studio": 1800,
+    "avg_food": 370,
+    "avg_transport": 120,
+    "notes": "Premium location near downtown Miami, high cost but excellent campus."
+  },
+  "Atlanta, GA": {
+    "school": ["Georgia Tech", "Georgia Institute of Technology"],
+    "avg_rent_shared": 950,
+    "avg_rent_studio": 1400,
+    "avg_food": 340,
+    "avg_transport": 100,
+    "notes": "Vibrant tech hub with many internship opportunities."
+  },
+  "Cambridge, MA": {
+    "school": ["MIT"],
+    "avg_rent_shared": 1500,
+    "avg_rent_studio": 2400,
+    "avg_food": 420,
+    "avg_transport": 90,
+    "notes": "Very expensive but world-class education and network."
+  },
+  "Pittsburgh, PA": {
+    "school": ["Carnegie Mellon", "Carnegie Mellon University"],
+    "avg_rent_shared": 800,
+    "avg_rent_studio": 1200,
+    "avg_food": 320,
+    "avg_transport": 75,
+    "notes": "Affordable for a major city, strong tech and robotics scene."
+  },
+  "Berkeley, CA": {
+    "school": ["UC Berkeley", "University of California, Berkeley"],
+    "avg_rent_shared": 1300,
+    "avg_rent_studio": 2000,
+    "avg_food": 400,
+    "avg_transport": 110,
+    "notes": "High cost but excellent public university with Bay Area tech access."
+  },
+  "Seattle, WA": {
+    "school": ["University of Washington"],
+    "avg_rent_shared": 1100,
+    "avg_rent_studio": 1700,
+    "avg_food": 380,
+    "avg_transport": 100,
+    "notes": "Tech hub with Amazon, Microsoft nearby."
+  },
+  "Tempe, AZ": {
+    "school": ["ASU", "Arizona State University"],
+    "avg_rent_shared": 750,
+    "avg_rent_studio": 1100,
+    "avg_food": 300,
+    "avg_transport": 85,
+    "notes": "Affordable desert city with growing tech scene."
+  },
+  "Palo Alto, CA": {
+    "school": ["Stanford", "Stanford University"],
+    "avg_rent_shared": 1600,
+    "avg_rent_studio": 2800,
+    "avg_food": 450,
+    "avg_transport": 120,
+    "notes": "Very expensive Silicon Valley location, top university."
+  },
+  "College Station, TX": {
+    "school": ["Texas A&M", "Texas A&M University"],
+    "avg_rent_shared": 650,
+    "avg_rent_studio": 950,
+    "avg_food": 280,
+    "avg_transport": 75,
+    "notes": "Affordable college town in Texas."
+  },
+  "Boston, MA": {
+    "school": ["MIT", "Massachusetts Institute of Technology"],
+    "avg_rent_shared": 1500,
+    "avg_rent_studio": 2400,
+    "avg_food": 420,
+    "avg_transport": 90,
+    "notes": "Very expensive but world-class education and network."
+  }
+}

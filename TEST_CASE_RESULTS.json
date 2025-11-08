@@ -1,0 +1,317 @@
+{
+  "test_case_1": {
+    "input": {
+      "career": "Software Engineer",
+      "location": "anywhere",
+      "goals": ["masters"],
+      "budget": "high",
+      "gpa": 3.7
+    },
+    "expected_output": {
+      "pathway": {
+        "career": "Software Engineer",
+        "mdc_program": "A.A. Computer Science",
+        "transfer_options": [
+          {
+            "university": "MIT",
+            "program": "B.S. Computer Science",
+            "url": "https://www.eecs.mit.edu/",
+            "location": "Cambridge, MA",
+            "tier": 1,
+            "ranking_score": 398,
+            "ranking_label": "World's Best Engineering"
+          },
+          {
+            "university": "Stanford University",
+            "program": "B.S. Computer Science",
+            "url": "https://cs.stanford.edu",
+            "location": "Palo Alto, CA",
+            "tier": 1,
+            "ranking_score": 396,
+            "ranking_label": "World's Top University"
+          },
+          {
+            "university": "Carnegie Mellon University",
+            "program": "B.S. Computer Science",
+            "url": "https://www.cs.cmu.edu/undergraduate",
+            "location": "Pittsburgh, PA",
+            "tier": 1,
+            "ranking_score": 378,
+            "ranking_label": "Top CS & Engineering"
+          },
+          {
+            "university": "University of Florida (UF)",
+            "program": "B.S. Computer Science",
+            "url": "https://www.cise.ufl.edu/academics/undergraduate/",
+            "location": "Gainesville, FL",
+            "tier": 1,
+            "ranking_score": 372,
+            "ranking_label": "Top Research University"
+          },
+          {
+            "university": "Florida International University (FIU)",
+            "program": "B.S. Computer Science",
+            "url": "https://www.cis.fiu.edu/academics/undergraduate/bs-in-cs/",
+            "location": "Miami, FL",
+            "tier": 2,
+            "ranking_score": 184,
+            "ranking_label": "Best Miami Transfer Partner"
+          }
+        ]
+      },
+      "graduate_nodes": [
+        {
+          "id": "node-4",
+          "type": "masters",
+          "data": {
+            "label": "MS Computer Science",
+            "institution": "MIT",
+            "cost": 183000,
+            "duration": "2 years",
+            "degree": "MS",
+            "tier": "Tier 1"
+          }
+        }
+      ],
+      "costs": {
+        "cheapest_path": {
+          "total": 57240,
+          "breakdown": {
+            "mdc": 6800,
+            "university_tuition": 13130,
+            "university_housing": 26400,
+            "university_food": 8400,
+            "university_transport": 2640,
+            "total": 57240
+          }
+        },
+        "prestige_path": {
+          "total": 183000,
+          "breakdown": {
+            "university": "MIT",
+            "tuition": 115972,
+            "housing": 36000,
+            "food": 10080,
+            "transport": 2160,
+            "total": 164212,
+            "masters_cost": 183000
+          }
+        }
+      },
+      "verification": {
+        "no_duplicates": true,
+        "out_of_state_first": true,
+        "correct_degree_name": "MS Computer Science",
+        "realistic_costs": true,
+        "tier_badges_visible": true
+      }
+    }
+  },
+
+  "test_case_2": {
+    "input": {
+      "career": "Mechanical Engineer",
+      "location": "anywhere",
+      "goals": ["research", "masters"],
+      "budget": "medium",
+      "gpa": 3.5
+    },
+    "expected_output": {
+      "pathway": {
+        "career": "Mechanical Engineer",
+        "mdc_program": "A.A. Engineering Pathway (Mechanical Engineering Track)",
+        "transfer_options": [
+          {
+            "university": "MIT",
+            "program": "B.S. Mechanical Engineering",
+            "url": "https://meche.mit.edu/",
+            "location": "Cambridge, MA",
+            "tier": 1,
+            "ranking_score": 398,
+            "ranking_label": "World's Best Engineering"
+          },
+          {
+            "university": "Stanford University",
+            "program": "B.S. Mechanical Engineering",
+            "url": "https://me.stanford.edu/",
+            "location": "Palo Alto, CA",
+            "tier": 1,
+            "ranking_score": 396,
+            "ranking_label": "World's Top University"
+          },
+          {
+            "university": "Georgia Institute of Technology",
+            "program": "B.S. Mechanical Engineering",
+            "url": "https://www.me.gatech.edu/",
+            "location": "Atlanta, GA",
+            "tier": 1,
+            "ranking_score": 367,
+            "ranking_label": "Top Engineering School"
+          },
+          {
+            "university": "University of Florida (UF)",
+            "program": "B.S. Mechanical Engineering",
+            "url": "https://mae.ufl.edu/",
+            "location": "Gainesville, FL",
+            "tier": 1,
+            "ranking_score": 372,
+            "ranking_label": "Top Research University"
+          },
+          {
+            "university": "Florida International University (FIU)",
+            "program": "B.S. Mechanical Engineering",
+            "url": "https://cec.fiu.edu/academics/undergraduate/mechanical-engineering/",
+            "location": "Miami, FL",
+            "tier": 2,
+            "ranking_score": 184,
+            "ranking_label": "Best Miami Transfer Partner"
+          }
+        ]
+      },
+      "graduate_nodes": [
+        {
+          "id": "node-4",
+          "type": "masters",
+          "data": {
+            "label": "MS Mechanical Engineering",
+            "institution": "MIT",
+            "cost": 183000,
+            "duration": "2 years",
+            "degree": "MS",
+            "tier": "Tier 1"
+          }
+        }
+      ],
+      "verification": {
+        "out_of_state_first": true,
+        "includes_florida_schools": true,
+        "no_duplicates": true,
+        "sorted_by_ranking": true,
+        "research_opportunities": true
+      }
+    }
+  },
+
+  "test_case_3": {
+    "input": {
+      "career": "Accountant",
+      "location": "anywhere",
+      "goals": [],
+      "budget": "low",
+      "gpa": 3.3
+    },
+    "expected_output": {
+      "pathway": {
+        "career": "Accountant",
+        "mdc_program": "A.A. Business Administration",
+        "transfer_options": [
+          {
+            "university": "Texas A&M University",
+            "program": "B.S. Business Administration",
+            "url": "https://mays.tamu.edu",
+            "location": "College Station, TX",
+            "tier": 2,
+            "ranking_score": 333,
+            "ranking_label": "Top Engineering & Research",
+            "tuition_out_of_state": 40000
+          },
+          {
+            "university": "Arizona State University",
+            "program": "B.S. Business Administration",
+            "url": "https://wpcarey.asu.edu/",
+            "location": "Tempe, AZ",
+            "tier": 2,
+            "ranking_score": 279,
+            "ranking_label": "Innovation University",
+            "tuition_out_of_state": 29900
+          }
+        ]
+      },
+      "costs": {
+        "cheapest_path": {
+          "total": 65000,
+          "breakdown": {
+            "university": "Arizona State University",
+            "location": "Tempe, AZ",
+            "tuition_out_of_state": 29900,
+            "housing": 18000,
+            "food": 7200,
+            "transport": 2040,
+            "years": 2,
+            "total": 65140
+          }
+        },
+        "prestige_path": {
+          "total": 87000,
+          "breakdown": {
+            "university": "Texas A&M University",
+            "location": "College Station, TX",
+            "tuition_out_of_state": 40000,
+            "housing": 15600,
+            "food": 6720,
+            "transport": 1800,
+            "total": 87120
+          }
+        }
+      },
+      "verification": {
+        "affordable_out_of_state": true,
+        "correct_ranking": true,
+        "realistic_costs": true,
+        "no_private_schools": true
+      }
+    }
+  },
+
+  "ranking_formula": {
+    "description": "Score = (4 - tier) × 100 + (300 - national_rank)",
+    "examples": {
+      "MIT": {
+        "tier": 1,
+        "national_rank": 2,
+        "score": 398
+      },
+      "Stanford": {
+        "tier": 1,
+        "national_rank": 3,
+        "score": 396
+      },
+      "UF": {
+        "tier": 1,
+        "national_rank": 28,
+        "score": 372
+      },
+      "Georgia Tech": {
+        "tier": 1,
+        "national_rank": 33,
+        "score": 367
+      },
+      "Texas A&M": {
+        "tier": 2,
+        "national_rank": 67,
+        "score": 333
+      },
+      "ASU": {
+        "tier": 2,
+        "national_rank": 121,
+        "score": 279
+      },
+      "FIU": {
+        "tier": 2,
+        "national_rank": 216,
+        "score": 184
+      }
+    }
+  },
+
+  "deduplication_logic": {
+    "description": "Normalizes university names to prevent duplicates",
+    "examples": {
+      "Florida International University (FIU)": "FLORIDA INTERNATIONAL FIU",
+      "FIU": "FIU",
+      "University of Florida": "OF FLORIDA",
+      "UF": "UF"
+    },
+    "rule": "Remove parentheses, 'UNIVERSITY', extra spaces, then check for duplicates"
+  }
+}
