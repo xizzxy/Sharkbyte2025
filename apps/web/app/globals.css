@@ -1,0 +1,83 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 0 0% 100%;
+    --foreground: 222.2 84% 4.9%;
+  }
+
+  body {
+    @apply bg-gradient-to-br from-blue-50 via-white to-purple-50;
+    @apply min-h-screen;
+  }
+}
+
+@layer components {
+  .btn-primary {
+    @apply bg-gradient-to-r from-blue-600 to-purple-600 text-white font-semibold px-6 py-3 rounded-lg shadow-lg hover:shadow-xl transition-all duration-200 hover:scale-105;
+  }
+
+  .btn-secondary {
+    @apply bg-white text-gray-700 font-semibold px-6 py-3 rounded-lg border-2 border-gray-200 hover:border-blue-400 transition-all duration-200;
+  }
+
+  .card {
+    @apply bg-white rounded-xl shadow-lg p-6 border border-gray-100 hover:shadow-xl transition-shadow duration-200;
+  }
+
+  .input-field {
+    @apply w-full px-4 py-3 rounded-lg border-2 border-gray-200 focus:border-blue-500 focus:ring-2 focus:ring-blue-200 outline-none transition-all duration-200;
+  }
+
+  .label-field {
+    @apply block text-sm font-semibold text-gray-700 mb-2;
+  }
+}
+
+/* React Flow custom styles */
+.react-flow__node {
+  @apply rounded-lg shadow-md border-2;
+}
+
+.react-flow__node-mdc {
+  @apply bg-blue-100 border-blue-400;
+}
+
+.react-flow__node-university {
+  @apply bg-purple-100 border-purple-400;
+}
+
+.react-flow__node-cert {
+  @apply bg-green-100 border-green-400;
+}
+
+.react-flow__node-license {
+  @apply bg-yellow-100 border-yellow-400;
+}
+
+.react-flow__node-outcome {
+  @apply bg-pink-100 border-pink-400;
+}
+
+.react-flow__edge-path {
+  @apply stroke-2;
+  stroke: #3b82f6;
+}
+
+/* Loading animation */
+@keyframes shimmer {
+  0% {
+    background-position: -1000px 0;
+  }
+  100% {
+    background-position: 1000px 0;
+  }
+}
+
+.skeleton {
+  animation: shimmer 2s infinite;
+  background: linear-gradient(to right, #f0f0f0 4%, #e0e0e0 25%, #f0f0f0 36%);
+  background-size: 1000px 100%;
+}

@@ -1,0 +1,30 @@
+{
+  "name": "careerpilot-monorepo",
+  "version": "1.0.0",
+  "private": true,
+  "description": "CareerPilot AI - Multi-agent educational roadmap generator for Miami Dade College students",
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ],
+  "scripts": {
+    "dev": "turbo run dev",
+    "build": "turbo run build",
+    "test": "turbo run test",
+    "lint": "turbo run lint",
+    "clean": "turbo run clean && rm -rf node_modules",
+    "web:dev": "npm run dev --workspace=apps/web",
+    "worker:dev": "npm run dev --workspace=apps/worker",
+    "worker:deploy": "npm run deploy --workspace=apps/worker",
+    "agents:dev": "cd apps/agents && python main.py",
+    "agents:test": "cd apps/agents && pytest tests/",
+    "test:e2e": "cd apps/web && playwright test"
+  },
+  "devDependencies": {
+    "turbo": "^2.0.0"
+  },
+  "engines": {
+    "node": ">=18.0.0",
+    "npm": ">=9.0.0"
+  }
+}

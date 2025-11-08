@@ -1,0 +1,72 @@
+{
+  "mechanical_engineer": {
+    "code": "17-2141",
+    "title": "Mechanical Engineers",
+    "median_salary": 95300,
+    "growth_rate": "4%",
+    "outlook": "Average"
+  },
+  "electrical_engineer": {
+    "code": "17-2071",
+    "title": "Electrical Engineers",
+    "median_salary": 103390,
+    "growth_rate": "5%",
+    "outlook": "Average"
+  },
+  "civil_engineer": {
+    "code": "17-2051",
+    "title": "Civil Engineers",
+    "median_salary": 88050,
+    "growth_rate": "6%",
+    "outlook": "Faster than average"
+  },
+  "software_developer": {
+    "code": "15-1252",
+    "title": "Software Developers",
+    "median_salary": 120730,
+    "growth_rate": "21%",
+    "outlook": "Much faster than average"
+  },
+  "registered_nurse": {
+    "code": "29-1141",
+    "title": "Registered Nurses",
+    "median_salary": 77600,
+    "growth_rate": "6%",
+    "outlook": "Faster than average"
+  },
+  "architect": {
+    "code": "17-1011",
+    "title": "Architects, Except Landscape and Naval",
+    "median_salary": 82320,
+    "growth_rate": "5%",
+    "outlook": "Average"
+  },
+  "accountant": {
+    "code": "13-2011",
+    "title": "Accountants and Auditors",
+    "median_salary": 77250,
+    "growth_rate": "4%",
+    "outlook": "Average"
+  },
+  "data_scientist": {
+    "code": "15-2051",
+    "title": "Data Scientists",
+    "median_salary": 103500,
+    "growth_rate": "35%",
+    "outlook": "Much faster than average"
+  },
+  "computer_programmer": {
+    "code": "15-1251",
+    "title": "Computer Programmers",
+    "median_salary": 93000,
+    "growth_rate": "-10%",
+    "outlook": "Declining"
+  },
+  "financial_analyst": {
+    "code": "13-2051",
+    "title": "Financial Analysts",
+    "median_salary": 95570,
+    "growth_rate": "8%",
+    "outlook": "Faster than average"
+  }
+}

@@ -1,0 +1,40 @@
+# Cloudflare Worker Configuration for CareerPilot AI
+
+name = "careerpilot-worker"
+main = "src/index.ts"
+compatibility_date = "2024-11-07"
+account_id = "" # Add your Cloudflare account ID here
+
+# KV Namespaces (create these in Cloudflare dashboard)
+[[kv_namespaces]]
+binding = "ROADMAP_CACHE"
+id = "" # Create KV namespace: wrangler kv:namespace create "ROADMAP_CACHE"
+preview_id = "" # For preview/dev
+
+[[kv_namespaces]]
+binding = "RATE_LIMIT"
+id = "" # Create KV namespace: wrangler kv:namespace create "RATE_LIMIT"
+preview_id = "" # For preview/dev
+
+# Environment Variables
+[vars]
+# Update this to your deployed Python agent URL (Cloud Run, Railway, etc.)
+# For local dev: http://localhost:8000/api/plan
+PYTHON_AGENT_API_URL = "http://localhost:8000/api/plan"
+
+# Development configuration
+[env.development]
+vars = { PYTHON_AGENT_API_URL = "http://localhost:8000/api/plan" }
+
+# Production configuration
+[env.production]
+vars = { PYTHON_AGENT_API_URL = "https://your-agent-service.run.app/api/plan" }
+
+# Build configuration
+[build]
+command = ""
+
+# Triggers (custom domains)
+# [[routes]]
+# pattern = "api.careerpilot.com/*"
+# zone_name = "careerpilot.com"

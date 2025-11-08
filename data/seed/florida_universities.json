@@ -1,0 +1,154 @@
+[
+  {
+    "name": "Florida International University",
+    "abbreviation": "FIU",
+    "location": "Miami, FL",
+    "type": "public",
+    "in_state_tuition": 6565,
+    "out_of_state_tuition": 18566,
+    "programs": [
+      {
+        "name": "BS Mechanical Engineering",
+        "abet_accredited": true,
+        "mdc_articulation": "2+2",
+        "url": "https://cec.fiu.edu/departments/mme/"
+      },
+      {
+        "name": "BS Electrical Engineering",
+        "abet_accredited": true,
+        "mdc_articulation": "2+2",
+        "url": "https://cec.fiu.edu/departments/ece/"
+      },
+      {
+        "name": "BS Civil Engineering",
+        "abet_accredited": true,
+        "mdc_articulation": "2+2",
+        "url": "https://cec.fiu.edu/departments/cee/"
+      },
+      {
+        "name": "BS Computer Science",
+        "abet_accredited": true,
+        "mdc_articulation": "2+2",
+        "url": "https://www.cis.fiu.edu/"
+      },
+      {
+        "name": "RN-to-BSN",
+        "abet_accredited": false,
+        "mdc_articulation": "seamless",
+        "url": "https://cnhs.fiu.edu/"
+      }
+    ]
+  },
+  {
+    "name": "Florida Atlantic University",
+    "abbreviation": "FAU",
+    "location": "Boca Raton, FL",
+    "type": "public",
+    "in_state_tuition": 4831,
+    "out_of_state_tuition": 17276,
+    "programs": [
+      {
+        "name": "BS Mechanical Engineering",
+        "abet_accredited": true,
+        "mdc_articulation": "2+2",
+        "url": "https://www.fau.edu/engineering/me/"
+      },
+      {
+        "name": "BS Electrical Engineering",
+        "abet_accredited": true,
+        "mdc_articulation": "2+2",
+        "url": "https://www.fau.edu/engineering/eecs/"
+      },
+      {
+        "name": "BS Civil Engineering",
+        "abet_accredited": true,
+        "mdc_articulation": "2+2",
+        "url": "https://www.fau.edu/engineering/ce/"
+      },
+      {
+        "name": "BS Computer Science",
+        "abet_accredited": true,
+        "mdc_articulation": "2+2",
+        "url": "https://www.fau.edu/engineering/eecs/"
+      }
+    ]
+  },
+  {
+    "name": "University of Central Florida",
+    "abbreviation": "UCF",
+    "location": "Orlando, FL",
+    "type": "public",
+    "in_state_tuition": 6368,
+    "out_of_state_tuition": 22467,
+    "programs": [
+      {
+        "name": "BS Mechanical Engineering",
+        "abet_accredited": true,
+        "mdc_articulation": "DirectConnect",
+        "url": "https://www.ucf.edu/degree/mechanical-engineering-bsme/"
+      },
+      {
+        "name": "BS Computer Science",
+        "abet_accredited": true,
+        "mdc_articulation": "DirectConnect",
+        "url": "https://www.cs.ucf.edu/"
+      }
+    ]
+  },
+  {
+    "name": "University of Florida",
+    "abbreviation": "UF",
+    "location": "Gainesville, FL",
+    "type": "public",
+    "in_state_tuition": 6381,
+    "out_of_state_tuition": 28658,
+    "programs": [
+      {
+        "name": "BS Mechanical Engineering",
+        "abet_accredited": true,
+        "mdc_articulation": "transfer",
+        "url": "https://www.mae.ufl.edu/"
+      },
+      {
+        "name": "BS Computer Science",
+        "abet_accredited": true,
+        "mdc_articulation": "transfer",
+        "url": "https://www.cise.ufl.edu/"
+      }
+    ]
+  },
+  {
+    "name": "Georgia Institute of Technology",
+    "abbreviation": "Georgia Tech",
+    "location": "Atlanta, GA",
+    "type": "public",
+    "in_state_tuition": 10258,
+    "out_of_state_tuition": 31370,
+    "programs": [
+      {
+        "name": "BS Mechanical Engineering",
+        "abet_accredited": true,
+        "mdc_articulation": null,
+        "url": "https://www.me.gatech.edu/"
+      }
+    ],
+    "prestige_tier": true
+  },
+  {
+    "name": "Massachusetts Institute of Technology",
+    "abbreviation": "MIT",
+    "location": "Cambridge, MA",
+    "type": "private",
+    "in_state_tuition": 57590,
+    "out_of_state_tuition": 57590,
+    "programs": [
+      {
+        "name": "BS Mechanical Engineering",
+        "abet_accredited": true,
+        "mdc_articulation": null,
+        "url": "https://meche.mit.edu/"
+      }
+    ],
+    "prestige_tier": true
+  }
+]

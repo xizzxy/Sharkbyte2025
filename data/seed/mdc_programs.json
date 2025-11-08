@@ -1,0 +1,64 @@
+[
+  {
+    "code": "AS.EGR",
+    "name": "Engineering Associate in Science",
+    "credits": 60,
+    "url": "https://www.mdc.edu/engineering/",
+    "careers": [
+      "Mechanical Engineer",
+      "Electrical Engineer",
+      "Civil Engineer",
+      "Industrial Engineer"
+    ],
+    "description": "Prepares students for transfer to ABET-accredited engineering programs"
+  },
+  {
+    "code": "AS.NUR",
+    "name": "Nursing Associate in Science (ADN)",
+    "credits": 72,
+    "url": "https://www.mdc.edu/nursing/",
+    "careers": ["Registered Nurse"],
+    "description": "Prepares students for NCLEX-RN licensure exam and RN-to-BSN programs"
+  },
+  {
+    "code": "AS.CS",
+    "name": "Computer Science Associate in Science",
+    "credits": 60,
+    "url": "https://www.mdc.edu/stem/",
+    "careers": [
+      "Software Developer",
+      "Software Engineer",
+      "Data Scientist",
+      "Computer Programmer"
+    ],
+    "description": "Prepares students for transfer to BS Computer Science programs"
+  },
+  {
+    "code": "AA.BUS",
+    "name": "Business Administration Associate in Arts",
+    "credits": 60,
+    "url": "https://www.mdc.edu/business/",
+    "careers": [
+      "Accountant",
+      "Financial Analyst",
+      "Business Manager"
+    ],
+    "description": "General business foundation with transfer pathways"
+  },
+  {
+    "code": "AS.ARCH",
+    "name": "Architecture and Building Construction AS",
+    "credits": 60,
+    "url": "https://www.mdc.edu/architecture/",
+    "careers": ["Architect"],
+    "description": "Prepares students for transfer to NAAB-accredited architecture programs"
+  },
+  {
+    "code": "AS.RAD",
+    "name": "Radiography Associate in Science",
+    "credits": 68,
+    "url": "https://www.mdc.edu/medical/radiography/",
+    "careers": ["Radiologic Technologist"],
+    "description": "Prepares students for ARRT certification exam"
+  }
+]
