@@ -3,19 +3,16 @@ const nextConfig = {
   reactStrictMode: true,
   swcMinify: true,
 
-  // Environment variables that should be exposed to the browser
-  env: {
-    NEXT_PUBLIC_WORKER_API_URL: process.env.NEXT_PUBLIC_WORKER_API_URL || 'http://localhost:8787',
-    GEMINI_API_KEY: process.env.GEMINI_API_KEY,
-  },
+  // For Cloudflare Pages static export
+  output: 'export',
 
-  // For Cloudflare Pages deployment
-  output: 'standalone',
-
-  // Image optimization
+  // Disable features not supported in static export
   images: {
-    unoptimized: true, // Required for Cloudflare Pages
+    unoptimized: true, // Required for static export
   },
+
+  // Optional: Add trailing slashes for better static hosting
+  trailingSlash: true,
 }
 
 module.exports = nextConfig

@@ -41,6 +41,11 @@ export default {
       return handlePlanRequest(request, env, ctx);
     }
 
+    // Route: POST /api/chatbot
+    if (request.method === 'POST' && url.pathname === '/api/chatbot') {
+      return handleChatbotRequest(request, env, ctx);
+    }
+
     // Route: GET /api/careers
     if (request.method === 'GET' && url.pathname === '/api/careers') {
       return handleCareersRequest();
@@ -241,4 +246,103 @@ function handleCORS(): Response {
     status: 204,
     headers: corsHeaders()
   });
+}
+
+/**
+ * Handle /api/chatbot - AI chatbot responses
+ */
+async function handleChatbotRequest(request: Request, env: Env, ctx: ExecutionContext): Promise<Response> {
+  try {
+    // Parse request body
+    const body = await request.json() as { question: string; career?: string; path?: string };
+    const { question, career, path } = body;
+
+    // Validate input
+    if (!question || question.trim().length === 0) {
+      return new Response(JSON.stringify({
+        success: false,
+        error: 'Question is required'
+      }), {
+        status: 400,
+        headers: corsHeaders({ 'Content-Type': 'application/json' })
+      });
+    }
+
+    // Create cache key
+    const cacheKey = `chatbot:${await hashString(question + (career || '') + (path || ''))}`;
+
+    // Check cache first (1 hour TTL)
+    const cached = await env.ROADMAP_CACHE.get(cacheKey);
+    if (cached) {
+      console.log('[Chatbot Cache HIT]');
+      return new Response(JSON.stringify({
+        success: true,
+        answer: cached,
+        cached: true
+      }), {
+        headers: corsHeaders({ 'Content-Type': 'application/json' })
+      });
+    }
+
+    console.log('[Chatbot Cache MISS] Calling backend...');
+
+    // Call Python backend chatbot endpoint
+    const agentUrl = env.PYTHON_AGENT_API_URL || 'http://localhost:8000/api';
+    const backendUrl = agentUrl.replace('/api/plan', '/api/chatbot');
+
+    const backendResponse = await fetch(backendUrl, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ question, career, path })
+    });
+
+    if (!backendResponse.ok) {
+      const errorText = await backendResponse.text();
+      console.error('[Chatbot Backend Error]', errorText);
+      return new Response(JSON.stringify({
+        success: false,
+        error: 'Failed to generate response'
+      }), {
+        status: 500,
+        headers: corsHeaders({ 'Content-Type': 'application/json' })
+      });
+    }
+
+    const data = await backendResponse.json();
+    const answer = data.answer || data.response;
+
+    // Cache response for 1 hour
+    ctx.waitUntil(
+      env.ROADMAP_CACHE.put(cacheKey, answer, {
+        expirationTtl: 3600 // 1 hour
+      })
+    );
+
+    return new Response(JSON.stringify({
+      success: true,
+      answer,
+      cached: false
+    }), {
+      headers: corsHeaders({ 'Content-Type': 'application/json' })
+    });
+
+  } catch (error) {
+    console.error('[Chatbot Worker Error]', error);
+    return new Response(JSON.stringify({
+      success: false,
+      error: 'Internal server error'
+    }), {
+      status: 500,
+      headers: corsHeaders({ 'Content-Type': 'application/json' })
+    });
+  }
+}
+
+/**
+ * Hash a string for cache key
+ */
+async function hashString(str: string): Promise<string> {
+  const hashBuffer = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(str));
+  const hashArray = Array.from(new Uint8Array(hashBuffer));
+  return hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
 }

@@ -136,6 +136,18 @@ class ChatResponse(BaseModel):
     response: str
 
 
+class ChatbotRequest(BaseModel):
+    """Request body for /api/chatbot endpoint (simpler interface)"""
+    question: str
+    career: str = "Student"
+    path: str = None
+
+
+class ChatbotResponse(BaseModel):
+    """Response from /api/chatbot endpoint"""
+    answer: str
+
+
 @app.post("/api/chat", response_model=ChatResponse)
 async def chat(request: ChatRequest):
     """
@@ -177,6 +189,73 @@ async def chat(request: ChatRequest):
     except Exception as e:
         print(f"[ERROR] Chat failed: {e}")
         raise HTTPException(status_code=500, detail=f"Chat error: {str(e)}")
+
+
+@app.post("/api/chatbot", response_model=ChatbotResponse)
+async def chatbot(request: ChatbotRequest):
+    """
+    Simplified chatbot endpoint for career guidance
+
+    Args:
+        request: Question, career, and optional path
+
+    Returns:
+        AI-generated answer
+    """
+    try:
+        import google.generativeai as genai
+
+        # Configure Google AI with API key
+        api_key = os.getenv("GEMINI_API_KEY")
+        if not api_key:
+            raise ValueError("GEMINI_API_KEY not found in environment")
+
+        genai.configure(api_key=api_key)
+
+        # Build context-aware system prompt
+        system_prompt = f"""You are CareerPilot AI, a helpful career guidance assistant.
+You are helping a student pursuing a career as a {request.career}."""
+
+        if request.path:
+            path_desc = {
+                'cheapest': 'most affordable',
+                'fastest': 'fastest completion time',
+                'prestige': 'highest prestige universities'
+            }.get(request.path, request.path)
+            system_prompt += f" They are viewing the {path_desc} path."
+
+        system_prompt += """
+
+Your role is to:
+- Answer questions about their career path, education requirements, and university choices
+- Provide guidance on costs, timelines, and educational decisions
+- Help them understand the differences between path options
+- Offer advice on scholarships, financial aid, and cost-saving strategies
+- Explain certifications or degrees they'll need
+- Be encouraging and supportive
+
+Keep responses concise (2-4 sentences), friendly, and actionable."""
+
+        # Create model with system instruction
+        model = genai.GenerativeModel(
+            "gemini-2.0-flash-exp",
+            system_instruction=system_prompt
+        )
+
+        # Generate response
+        response = model.generate_content(
+            request.question,
+            generation_config=genai.GenerationConfig(
+                temperature=0.7,
+                max_output_tokens=500,
+            )
+        )
+
+        return ChatbotResponse(answer=response.text)
+
+    except Exception as e:
+        print(f"[ERROR] Chatbot failed: {e}")
+        raise HTTPException(status_code=500, detail=f"Chatbot error: {str(e)}")
 
 
 if __name__ == "__main__":

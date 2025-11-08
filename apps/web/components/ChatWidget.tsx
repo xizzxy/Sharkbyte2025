@@ -71,7 +71,11 @@ export default function ChatWidget({ isOpen, career = 'Student', selectedPath, b
     setIsLoading(true)
 
     try {
-      const response = await fetch('/api/chatbot', {
+      // Use Worker API endpoint from environment variable
+      const workerUrl = process.env.NEXT_PUBLIC_WORKER_API_URL || 'http://localhost:8787'
+      const apiUrl = workerUrl.replace('/api/plan', '/api/chatbot')
+
+      const response = await fetch(apiUrl, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -80,6 +84,10 @@ export default function ChatWidget({ isOpen, career = 'Student', selectedPath, b
           path: selectedPath
         })
       })
+
+      if (!response.ok) {
+        throw new Error(`API returned ${response.status}`)
+      }
 
       const data = await response.json()
 
